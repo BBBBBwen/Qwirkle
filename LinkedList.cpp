@@ -46,8 +46,6 @@ void LinkedList::deleteNode(Tile delTile) {
         }
     }
     delete delPtr;
-    delete curr;
-    delete temp;
     this->maxTiles--;
 }
 
