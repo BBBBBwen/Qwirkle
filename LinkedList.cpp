@@ -61,7 +61,7 @@ Tile LinkedList::get(unsigned int index) {
 Tile LinkedList::draw() {
     int rand = getRandom();
     Tile newTile = get(getRandom());
-    deleteNode(get(getRandom()));
+    deleteNode(newTile);
     return newTile;
 }
 
