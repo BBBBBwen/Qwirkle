@@ -3,7 +3,6 @@
 #include <iostream>
 LinkedList::LinkedList() :
     head(nullptr),
-    tail(nullptr),
     maxTiles(0) {
 }
 

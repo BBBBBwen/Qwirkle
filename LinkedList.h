@@ -19,7 +19,6 @@ public:
 
 private:
     Node* head;
-    Node* tail;
     int maxTiles;
 
 };
