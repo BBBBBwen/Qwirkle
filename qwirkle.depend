@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1556970675 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
+	"Node.h"
+
+1556970679 c:\users\bowen\documents\workplace\qwirkle\node.h
+	"Tile.h"
+
+1556971495 c:\users\bowen\documents\workplace\qwirkle\tile.h
+	<string>
+
+1556971495 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
+	"Tile.h"
+
+1556974640 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
+	"LinkedList.h"
+	<random>
+	<iostream>
+
+1556974609 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
+	"Node.h"
+	<vector>
+
+1556973499 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
+	"Player.h"
+	<exception>
+
+1556973494 c:\users\bowen\documents\workplace\qwirkle\player.h
+	"Tile.h"
+	"LinkedList.h"
+	<vector>
+
+1557037002 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
+	"LinkedList.h"
+	"Player.h"
+	"TileCodes.h"
+	<iostream>
+	<regex>
+
+1556524900 c:\users\bowen\documents\workplace\qwirkle\tilecodes.h
+
