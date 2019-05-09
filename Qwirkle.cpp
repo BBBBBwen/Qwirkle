@@ -3,6 +3,7 @@
 #include "TileCodes.h"
 
 #include <iostream>
+#include <fstream>
 #include <regex>
 #define EXIT_SUCCESS    0
 
@@ -17,7 +18,7 @@ public:
     void paintMap();
     void command(std::string str);
     void placeTile(Tile* tile);
-    void play();
+    void saveGame(std::string fileNmae);
     void initialBag();
     void initialMap();
     bool isValid();
@@ -92,14 +93,57 @@ void Qwirkle::newGame() {
     std::cout << "Let's Play!" << std::endl << std::endl;
     paintMap();
     std::cout << "> ";
-    std::string coman = "";
-    std::cin >> coman;
-    command(coman);
+    std::string fn;
+    std::cin >> fn;
+    saveGame(fn);
 }
 
 void Qwirkle::loadGame() {
+    std::string fileName;
     std::cout << "Enter the filename from which load a game" << std::endl;
     std::cout << "> ";
+    std::cin >> fileName;
+    std::ifstream inFile(fileName + ".txt");
+    std::string playerName;
+    int playerScore;
+    std::string playerHand;
+    std::vector<Tile> temp;
+    int numSize = 0;
+    std::string mapPerLine;
+    std::string bagLine;
+    inFile >> numSize;
+    for(int i = 0; i < numPlayer; i++){
+    inFile >> playerName;
+    inFile >> playerScore;
+    inFile >> playerHand;
+    std::istringstream is(playerHand);
+    std::string str;
+    while(is >> str){
+        Tile tile(str.at(0),str.at(1));
+        player[i].addTiles(tile);
+    }
+    player[i].setName(playerName);
+    player[i].setScore(playerScore);
+    }
+    for(int i = 0; i < numSize; i++) {
+        inFile >> mapPerLine;
+        std::istringstream is(mapPerLine);
+        std::string str;
+        while(is >> str){
+            Tile tile(str.at(0),str.at(1));
+            temp.push_back(tile);
+        }
+        gameMap.push_back(temp);
+    }
+    inFile >> bagLine;
+        std::istringstream is(bagLine);
+        std::string str;
+        while(is >> str){
+            Tile tile(str.at(0),str.at(1));
+            bag.addNote(tile);
+        }
+    inFile.close();
+    paintMap();
 }
 
 void Qwirkle::showInfo() {
@@ -153,8 +197,8 @@ void Qwirkle::paintMap() {
     std::cout << std::endl << "----------------------" << std::endl;
     for(int i = 0; i < gameMap.size(); i++) {
         std::cout << (char)('A' + i) << " |";
-        for(int j = 0; j < gameMap.at(0).size(); j++) {
-            std::cout << gameMap.at(i).at(j).print() << "|";
+        for(int j = 0; j < gameMap[0].size(); j++) {
+            std::cout << gameMap[i][j].print() << "|";
         }
         std::cout << std::endl;
     }
@@ -163,10 +207,26 @@ void Qwirkle::paintMap() {
 }
 
 void Qwirkle::command(std::string str) {
-    if(str.find("place") != std::string::npos){
+    if(str.find("place") != std::string::npos) {
         std::cout << "cool" << std::endl;
     }
 }
 
-void Qwirkle::play() {
+void Qwirkle::saveGame(std::string fileName) {
+    std::ofstream outFile;
+    outFile.open(fileName + ".txt");
+    for(int i = 0; i < numPlayer; i++) {
+        outFile << player[i].getName() << " " << player[i].getScore() << std::endl;
+        outFile << player[i].printTiles() << std::endl;
+    }
+    outFile << gameMap.size() << std::endl;
+    for(int i = 0; i < gameMap.size(); i++) {
+        for(int j = 0; j < gameMap[0].size(); j++) {
+            outFile << gameMap[i][j].print() << " ";
+        }
+        outFile << std::endl;
+    }
+    for(int i = 0;i < bag.getSize(); i++)
+    outFile << bag.get(i).print() << " ";
+    outFile.close();
 }

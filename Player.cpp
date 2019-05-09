@@ -1,5 +1,7 @@
 #include "Player.h"
 #include <exception>
+#include <string>
+#include <sstream>
 
 Player::Player() :
     name(""), score(0), maxNumTiles(6) {

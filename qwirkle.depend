@@ -11,7 +11,7 @@
 1556971495 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
 	"Tile.h"
 
-1556974640 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
+1557045685 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
 	"LinkedList.h"
 	<random>
 	<iostream>
@@ -20,11 +20,13 @@
 	"Node.h"
 	<vector>
 
-1556973499 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
+1557400098 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
 	"Player.h"
 	<exception>
+	<string>
+	<sstream>
 
-1556973494 c:\users\bowen\documents\workplace\qwirkle\player.h
+1557400098 c:\users\bowen\documents\workplace\qwirkle\player.h
 	"Tile.h"
 	"LinkedList.h"
 	<vector>
