@@ -10,7 +10,6 @@ public:
     Node(Tile tile, Node* next, Node* previous);
     Node(Node& other);
     ~Node();
-    void setTile(Tile tile);
 
     Tile     tile;
     Node*    next;

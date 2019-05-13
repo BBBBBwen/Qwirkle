@@ -12,7 +12,3 @@ Node::Node(Node& other) :
 
 Node::~Node(){
 }
-
-void Node::setTile(Tile tile) {
-    this->tile = tile;
-}
