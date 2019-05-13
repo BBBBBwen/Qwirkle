@@ -24,7 +24,7 @@ public:
     void initialMap();
     void play();
     void switchTurn();
-    bool isValid();
+    bool isValid(Tile tile, int x, int y);
 
 private:
     Player* player;
@@ -32,6 +32,7 @@ private:
     Tile* emptyTile;
     int numPlayer;
     int turn;
+    bool checkFirstTile = true;
     std::vector< std::vector<Tile> > gameMap;
 };
 
@@ -78,7 +79,7 @@ void Qwirkle::menu() {
     } else if(choose == 4) {
         std::cout << "Good Bye!" << std::endl;
         std::exit(0);
-    }else{
+    } else {
         std::cout << "Wrong Input, Try Again" << std::endl;
         menu();
     }
@@ -237,55 +238,61 @@ void Qwirkle::paintMap() {
 }
 
 void Qwirkle::command() {
-    std::cout << "> ";
-    std::string firstCommand;
-    std::string secondCommand;
-    std::string tileOnHold;
-    std::string location;
-    std::cin >> firstCommand;
-    std::transform(firstCommand.begin(), firstCommand.end(), firstCommand.begin(),
-                   ::toupper);
-    std::transform(secondCommand.begin(), secondCommand.end(),
-                   secondCommand.begin(), ::toupper);
-    if(firstCommand.find("SAVE") != std::string::npos) {
-        std::cout << "Enter File Name You Want To Save" << std::endl;
-        std::cin >> secondCommand;
-        saveGame(secondCommand);
-    } else if(firstCommand.find("PLACE") != std::string::npos) {
-        std::cin >> tileOnHold >> secondCommand >> location;
-        int y = location[0] - 65;
-        int x = location[1] - 48;
-        while(!gameMap[y][x].isEqual(*emptyTile)) {
-            std::cout << "wrong location, enter other location" << std::endl << "> ";
-            std::cin >> location;
-            y = location[0] - 65;
-            x = location[1] - 48;
+    bool check = true;
+    while(check) {
+        std::cout << "> ";
+        std::string firstCommand;
+        std::string secondCommand;
+        std::string tileOnHold;
+        std::string location;
+        std::cin >> firstCommand;
+        std::transform(firstCommand.begin(), firstCommand.end(), firstCommand.begin(),
+                       ::toupper);
+        if(firstCommand.find("SAVE") != std::string::npos) {
+            std::cout << "Enter File Name You Want To Save" << std::endl;
+            std::cin >> secondCommand;
+            saveGame(secondCommand);
+        } else if(firstCommand.find("PLACE") != std::string::npos) {
+            std::cin >> tileOnHold >> secondCommand >> location;
+            std::transform(secondCommand.begin(), secondCommand.end(),
+                           secondCommand.begin(), ::toupper);
+            if(secondCommand.find("AT") == std::string::npos)
+                continue;
+            int y = location[0] - 65;
+            int x = location[1] - 48;
+            if(!gameMap[y][x].isEqual(*emptyTile)) {
+                std::cout << "wrong location, enter other location" << std::endl << "> ";
+                continue;
+            }
+            Shape shape = tileOnHold[1] - 48;
+            Tile newTile(shape, tileOnHold[0]);
+            if(!player[turn].hasTile(newTile)) {
+                std::cout << "You Dont Have That Tile, Enter other tile" << std::endl << "> ";
+                continue;
+            }
+            if(!isValid(newTile, x, y)) {
+                std::cout << "You Cant Put The Tile There" << std::endl << "> ";
+                continue;
+            }
+            placeTile(newTile, x, y);
+            checkFirstTile = false;
+            switchTurn();
+            check = false;
+        } else if(firstCommand.find("QUIT") != std::string::npos
+                  || firstCommand.find("EXIT") != std::string::npos) {
+            std::cout << "Good Bye!" << std::endl;
+            std::exit(0);
+        } else if(firstCommand.find("HELP") != std::string::npos) {
+            std::cout << "save  -   save game" << std::endl;
+            std::cout <<
+                      "place (Tile) at (Location)  -   choose a tile to place at certain location" <<
+                      std::endl;
+            std::cout << "quit/exit  -   exit game" << std::endl;
+            std::cout << "help  -   get help" << std::endl;
+        } else {
+            std::cout << "unrecognized Input" << std::endl;
         }
-        Shape shape = tileOnHold[1] - 48;
-        Tile newTile(shape, tileOnHold[0]);
-        while(!player[turn].hasTile(newTile)) {
-            std::cout << "you dont have that tile, enter other tile" << std::endl << "> ";
-            std::cin >> tileOnHold;
-            shape = tileOnHold[1] - 48;
-            newTile = {shape, tileOnHold[0]};
-        }
-        placeTile(newTile, x, y);
-        switchTurn();
-    } else if(firstCommand.find("QUIT") != std::string::npos
-              || firstCommand.find("EXIT") != std::string::npos) {
-        std::cout << "Good Bye!" << std::endl;
-        std::exit(0);
-    } else if(firstCommand.find("HELP") != std::string::npos) {
-        std::cout << "save  -   save game" << std::endl;
-        std::cout <<
-                  "place (Tile) at (Location)  -   choose a tile to place at certain location" <<
-                  std::endl;
-        std::cout << "quit/exit  -   exit game" << std::endl;
-        std::cout << "help  -   get help" << std::endl;
-    } else {
-        std::cout << "unrecognized Input" << std::endl;
     }
-    std::cout << "> ";
 }
 
 void Qwirkle::switchTurn() {
@@ -301,15 +308,49 @@ void Qwirkle::play() {
     std::cout << "Score for A: " << player[0].getScore() << std::endl;
     std::cout << "Score for B: " << player[1].getScore() << std::endl << std::endl;
     paintMap();
-    std::cout << std::endl << "Your hand is: " << player[0].printTiles() <<
+    std::cout << std::endl << "Your hand is: " << player[turn].printTiles() <<
               std::endl;
     std::cout << std::endl;
     command();
 }
 
 void Qwirkle::placeTile(Tile tile, int locationX, int locationY) {
+    int score = player[turn].getScore() + 1;
+    int flag = 0;
     gameMap[locationY][locationX] = tile;
-    player[turn].setScore(player[turn].getScore() + 1);
+    for(int i = 0; i < gameMap.size(); i++) {
+        if(!gameMap[locationY][i].isEqual(*emptyTile) && i != locationX) {
+            score++;
+            flag++;
+        } else if(!gameMap[i][locationX].isEqual(*emptyTile) && i != locationY) {
+            score++;
+            flag++;
+        }
+    }
+    if(flag == 2) score += 1;
+    player[turn].setScore(score);
     player[turn].deleteTiles(tile);
     player[turn].addTiles(bag.draw());
+}
+
+bool Qwirkle::isValid(Tile tile, int x, int y) {
+    if(checkFirstTile)
+        return true;
+    for(int i = -1; i < 2; i += 2) {
+        if(x + i >= 0 && x + i < gameMap.size())
+            if(!gameMap[y][x + i].isEqual(*emptyTile)) {
+                if(gameMap[y][x + i].getShape() == tile.getShape()
+                        || gameMap[y][x + i].getColour() == tile.getColour()) {
+                    return true;
+                }
+            }
+        if(y + i >= 0 && y + i < gameMap.size())
+            if(!gameMap[y + i][x].isEqual(*emptyTile)) {
+                if(gameMap[y + i][x].getShape() == tile.getShape()
+                        || gameMap[y + i][x].getColour() == tile.getColour()) {
+                    return true;
+                }
+            }
+    }
+    return false;
 }
