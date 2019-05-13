@@ -60,6 +60,34 @@ Qwirkle::Qwirkle() {
     }
 }
 
+//initialze the bag, put every tile into the bag
+void Qwirkle::initialBag() {
+    Shape shape[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
+    Colour colour[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 6; j++) {
+            for(int n = 0; n < 6; n++) {
+                Tile tile(shape[j], colour[n]);
+                bag.addNote(tile);
+            }
+        }
+    }
+}
+
+//initialze the map
+void Qwirkle::initialMap() {
+    std::vector<Tile> temp;
+    Tile tile(0, ' ');
+    for(int i = 0; i < 6; i++) {
+        temp.clear();
+        for(int j = 0; j < 6; j++) {
+            temp.push_back(tile);
+        }
+        gameMap.push_back(temp);
+    }
+}
+
+//display the menu and processing the choice
 void Qwirkle::menu() {
     int choose;
     std::cout << "-----Menu-----" << std::endl;
@@ -85,6 +113,7 @@ void Qwirkle::menu() {
     }
 }
 
+//start a new game
 void Qwirkle::newGame() {
     int i = 0, numPlayer = 2;
     std::string name = "";
@@ -106,6 +135,7 @@ void Qwirkle::newGame() {
         play();
 }
 
+//save game data to the file
 void Qwirkle::saveGame(std::string fileName) {
     std::ofstream outFile;
     outFile.open(fileName + ".txt");
@@ -127,6 +157,7 @@ void Qwirkle::saveGame(std::string fileName) {
     outFile.close();
 }
 
+//load game data from the file
 void Qwirkle::loadGame() {
     std::string fileName;
     std::cout << "Enter The Filename From Which Load A Game" << std::endl;
@@ -182,6 +213,7 @@ void Qwirkle::loadGame() {
     }
 }
 
+//display infomation of the group
 void Qwirkle::showInfo() {
     std::cout << "----------------------------------------" << std::endl;
     std::cout << "Name: <Bowen Zhang>" << std::endl;
@@ -198,31 +230,8 @@ void Qwirkle::showInfo() {
     std::cout << "Email: <>" << std::endl << std::endl;
     std::cout << "----------------------------------------" << std::endl;
 }
-void Qwirkle::initialBag() {
-    Shape shape[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-    Colour colour[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 6; j++) {
-            for(int n = 0; n < 6; n++) {
-                Tile tile(shape[j], colour[n]);
-                bag.addNote(tile);
-            }
-        }
-    }
-}
 
-void Qwirkle::initialMap() {
-    std::vector<Tile> temp;
-    Tile tile(0, ' ');
-    for(int i = 0; i < 6; i++) {
-        temp.clear();
-        for(int j = 0; j < 6; j++) {
-            temp.push_back(tile);
-        }
-        gameMap.push_back(temp);
-    }
-}
-
+//paint map with the frame
 void Qwirkle::paintMap() {
     std::cout << "   ";
     for(int i = 0; i < gameMap[0].size(); i++)
@@ -237,6 +246,7 @@ void Qwirkle::paintMap() {
     }
 }
 
+//processing the command
 void Qwirkle::command() {
     bool check = true;
     while(check) {
@@ -256,6 +266,10 @@ void Qwirkle::command() {
             std::cin >> tileOnHold >> secondCommand >> location;
             std::transform(secondCommand.begin(), secondCommand.end(),
                            secondCommand.begin(), ::toupper);
+            std::transform(tileOnHold.begin(), tileOnHold.end(),
+                           tileOnHold.begin(), ::toupper);
+            std::transform(location.begin(), location.end(),
+                           location.begin(), ::toupper);
             if(secondCommand.find("AT") == std::string::npos)
                 continue;
             int y = location[0] - 65;
@@ -295,6 +309,7 @@ void Qwirkle::command() {
     }
 }
 
+//switch the player
 void Qwirkle::switchTurn() {
     if(turn == 0) {
         turn = 1;
@@ -303,6 +318,7 @@ void Qwirkle::switchTurn() {
     }
 }
 
+//the board that game mainly run
 void Qwirkle::play() {
     std::cout << player[turn].getName() << ", it's your turn" << std::endl;
     std::cout << "Score For A: " << player[0].getScore() << std::endl;
@@ -314,43 +330,130 @@ void Qwirkle::play() {
     command();
 }
 
+//place the tile at the certain location and add the score of that tile as well
 void Qwirkle::placeTile(Tile tile, int locationX, int locationY) {
     int score = player[turn].getScore() + 1;
+    int rowScore = 0;
+    int colScore = 0;
+    bool checkRowPositive = true;
+    bool checkRowNegative = true;
+    bool checkColPositive = true;
+    bool checkColNegative = true;
     int flag = 0;
     gameMap[locationY][locationX] = tile;
-    for(int i = 0; i < gameMap.size(); i++) {
-        if(!gameMap[locationY][i].isEqual(*emptyTile) && i != locationX) {
-            score++;
-            flag++;
-        } else if(!gameMap[i][locationX].isEqual(*emptyTile) && i != locationY) {
-            score++;
-            flag++;
-        }
+    for(int i = 1; i < 6; i++) {
+        if(locationX + i < gameMap.size())
+            if(!gameMap[locationY][locationX + i].isEqual(*emptyTile) && checkColPositive) {
+                rowScore++;
+                flag++;
+            } else {
+                checkColPositive = false;
+            }
+        if(locationX - i >= 0)
+            if(!gameMap[locationY][locationX - i].isEqual(*emptyTile) && checkColNegative) {
+                rowScore++;
+                flag++;
+            } else {
+                checkColNegative = false;
+            }
+        if(locationY + i < gameMap.size())
+            if(!gameMap[locationY + i][locationX].isEqual(*emptyTile) && checkRowPositive) {
+                colScore++;
+                flag++;
+            } else {
+                checkRowPositive = false;
+            }
+        if(locationY - i >= 0)
+            if(!gameMap[locationY - i][locationX].isEqual(*emptyTile) && checkRowNegative) {
+                colScore++;
+                flag++;
+            } else {
+                checkRowNegative = false;
+            }
     }
-    if(flag == 2) score += 1;
+    if(colScore == 5) {
+        std::cout << "Qwirkle!" << std::endl;
+        colScore += 6;
+    }
+    if(rowScore == 5) {
+        std::cout << "Qwirkle!" << std::endl;
+        rowScore += 6;
+    }
+    if(flag > 1)
+        score += 1;
+    score += colScore + rowScore;
     player[turn].setScore(score);
     player[turn].deleteTiles(tile);
     player[turn].addTiles(bag.draw());
 }
 
+//check if the location that the tile needs to place is valid or not
 bool Qwirkle::isValid(Tile tile, int x, int y) {
     if(checkFirstTile)
         return true;
+    int checkRow = 0;
+    int checkCol = 0;
+    bool checkRowPositive = true;
+    bool checkRowNegative = true;
+    bool checkColPositive = true;
+    bool checkColNegative = true;
+    for(int i = 1; i < 6; i++) {
+        if(x + i < gameMap.size())
+            if(!gameMap[y][x + i].isEqual(*emptyTile) && checkColPositive) {
+                if(gameMap[y][x + i].isEqual(tile))
+                    return false;
+                checkRow++;
+            } else {
+                checkColPositive = false;
+            }
+        if(x - i >= 0)
+            if(!gameMap[y][x - i].isEqual(*emptyTile) && checkColNegative) {
+                if(gameMap[y][x + i].isEqual(tile))
+                    return false;
+                checkRow++;
+            } else {
+                checkColNegative = false;
+            }
+        if(y + i < gameMap.size())
+            if(!gameMap[y + i][x].isEqual(*emptyTile) && checkRowPositive) {
+                if(gameMap[y][x + i].isEqual(tile))
+                    return false;
+                checkCol++;
+            } else {
+                checkRowPositive = false;
+            }
+        if(y - i >= 0)
+            if(!gameMap[y - i][x].isEqual(*emptyTile) && checkRowNegative) {
+                if(gameMap[y][x + i].isEqual(tile))
+                    return false;
+                checkCol++;
+            } else {
+                checkRowNegative = false;
+            }
+    }
+    if(checkRow >= 6 || checkCol >= 6)
+        return false;
     for(int i = -1; i < 2; i += 2) {
         if(x + i >= 0 && x + i < gameMap.size())
             if(!gameMap[y][x + i].isEqual(*emptyTile)) {
-                if(gameMap[y][x + i].getShape() == tile.getShape()
-                        || gameMap[y][x + i].getColour() == tile.getColour()) {
-                    return true;
+                if(gameMap[y][x + i].getShape() != tile.getShape()
+                        && gameMap[y][x + i].getColour() != tile.getColour()) {
+                    return false;
+                }
+                if(gameMap[y][x + i].isEqual(tile)) {
+                    return false;
                 }
             }
         if(y + i >= 0 && y + i < gameMap.size())
             if(!gameMap[y + i][x].isEqual(*emptyTile)) {
-                if(gameMap[y + i][x].getShape() == tile.getShape()
-                        || gameMap[y + i][x].getColour() == tile.getColour()) {
-                    return true;
+                if(gameMap[y + i][x].getShape() != tile.getShape()
+                        && gameMap[y + i][x].getColour() != tile.getColour()) {
+                    return false;
+                }
+                if(gameMap[y + i][x].isEqual(tile)) {
+                    return false;
                 }
             }
     }
-    return false;
+    return true;
 }

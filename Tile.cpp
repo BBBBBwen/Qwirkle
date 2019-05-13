@@ -5,6 +5,7 @@ Tile::Tile(Shape shape, Colour colour) {
     this->shape = shape;
 };
 
+//print the tile as string
 std::string Tile::print() {
     if(colour == ' ')
         return "  ";
@@ -14,14 +15,17 @@ std::string Tile::print() {
     return str;
 }
 
+//get the shape
 Shape Tile::getShape() {
     return shape;
 }
 
+//get the colour
 Colour Tile::getColour(){
     return colour;
 }
 
+//check if two tiles are completely equal
 bool Tile::isEqual(Tile tile) {
     if(this->colour == tile.getColour() && this->shape == tile.getShape())
         return true;

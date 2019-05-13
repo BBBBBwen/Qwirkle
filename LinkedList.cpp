@@ -13,6 +13,7 @@ int LinkedList::getSize() {
     return maxTiles;
 }
 
+//add a tile to a node and add that node to the LinkedList
 void LinkedList::addNote(Tile tile) {
     Node* newNode = new Node(tile, nullptr, nullptr);
     if(head == nullptr)
@@ -28,6 +29,7 @@ void LinkedList::addNote(Tile tile) {
     this->maxTiles++;
 }
 
+//delete the node that the tile belonged to
 void LinkedList::deleteNode(Tile delTile) {
     Node* delPtr = nullptr;
     Node* curr = head;
@@ -49,6 +51,7 @@ void LinkedList::deleteNode(Tile delTile) {
     this->maxTiles--;
 }
 
+//get the certain tile from the LinkedList
 Tile LinkedList::get(unsigned int index) {
     Node* curr = head;
     for(int i = 0; i < index; i++) {
@@ -58,6 +61,7 @@ Tile LinkedList::get(unsigned int index) {
     return newTile;
 }
 
+//draw a tile from a random node and delete the node
 Tile LinkedList::draw() {
     int rand = getRandom();
     Tile newTile = get(getRandom());
@@ -65,12 +69,14 @@ Tile LinkedList::draw() {
     return newTile;
 }
 
+//get a random integer for other purpose
 int LinkedList::getRandom() {
     std::random_device engine;
     std::uniform_int_distribution<int> dist(0, maxTiles);
     return dist(engine);
 }
 
+//replace the tile from a random node
 Tile LinkedList::replaceTile(Tile tile) {
     int rand = getRandom();
     Tile newTile = get(rand);
