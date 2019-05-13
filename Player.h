@@ -13,7 +13,9 @@ public:
     LinkedList getTiles();
     void setScore(int score);
     void addTiles(Tile tile);
+    void deleteTiles(Tile tile);
     void setName(std::string name);
+    bool hasTile(Tile tile);
     std::string printTiles();
 private:
     std::string name;

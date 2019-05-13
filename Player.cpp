@@ -43,3 +43,16 @@ void Player::addTiles(Tile tile) {
     else
         throw "too much tiles on hand";
 }
+
+void Player::deleteTiles(Tile tile) {
+    this->handTiles.deleteNode(tile);
+}
+
+bool Player::hasTile(Tile tile) {
+    for(int i = 0; i < handTiles.getSize(); i++) {
+        if(handTiles.get(i).isEqual(tile)) {
+            return true;
+        }
+    }
+    return false;
+}
