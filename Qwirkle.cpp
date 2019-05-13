@@ -78,6 +78,9 @@ void Qwirkle::menu() {
     } else if(choose == 4) {
         std::cout << "Good Bye!" << std::endl;
         std::exit(0);
+    }else{
+        std::cout << "Wrong Input, Try Again" << std::endl;
+        menu();
     }
 }
 
@@ -272,6 +275,13 @@ void Qwirkle::command() {
               || firstCommand.find("EXIT") != std::string::npos) {
         std::cout << "Good Bye!" << std::endl;
         std::exit(0);
+    } else if(firstCommand.find("HELP") != std::string::npos) {
+        std::cout << "save  -   save game" << std::endl;
+        std::cout <<
+                  "place (Tile) at (Location)  -   choose a tile to place at certain location" <<
+                  std::endl;
+        std::cout << "quit/exit  -   exit game" << std::endl;
+        std::cout << "help  -   get help" << std::endl;
     } else {
         std::cout << "unrecognized Input" << std::endl;
     }
@@ -302,10 +312,4 @@ void Qwirkle::placeTile(Tile tile, int locationX, int locationY) {
     player[turn].setScore(player[turn].getScore() + 1);
     player[turn].deleteTiles(tile);
     player[turn].addTiles(bag.draw());
-}
-
-std::string StringToUpper(std::string strToConvert) {
-    std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(),
-                   ::toupper);
-    return strToConvert;
 }
