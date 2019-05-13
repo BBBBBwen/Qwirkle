@@ -38,7 +38,7 @@ private:
 
 int main(void) {
     Qwirkle* qwirkle = new Qwirkle();
-    std::cout << "Welcome to Qwirkle!" << std::endl;
+    std::cout << "Welcome To Qwirkle!" << std::endl;
     std::cout << "-------------------" << std::endl;
     qwirkle->menu();
     return EXIT_SUCCESS;
@@ -88,14 +88,14 @@ void Qwirkle::menu() {
 void Qwirkle::newGame() {
     int i = 0, numPlayer = 2;
     std::string name = "";
-    std::cout << "Starting a New Game" << std::endl;
+    std::cout << "Starting A New Game" << std::endl;
     while(i < numPlayer) {
-        std::cout << "Enter a name for player " << i + 1 <<
-                  " (uppercase characters only)" << std::endl;
+        std::cout << "Enter A Name For Player " << i + 1 <<
+                  " (Uppercase Characters Only)" << std::endl;
         std::cout << "> ";
         std::cin >> name;
         if(!std::regex_match(name, std::regex("[A-Z]+"))) {
-            std::cout << "wrong input, enter again" << std::endl;
+            std::cout << "Wrong Input, Enter Again" << std::endl;
         } else {
             player[i].setName(name);
             i++;
@@ -129,7 +129,7 @@ void Qwirkle::saveGame(std::string fileName) {
 
 void Qwirkle::loadGame() {
     std::string fileName;
-    std::cout << "Enter the filename from which load a game" << std::endl;
+    std::cout << "Enter The Filename From Which Load A Game" << std::endl;
     std::cout << "> ";
     std::cin >> fileName;
     std::ifstream inFile(fileName + ".txt");
@@ -261,7 +261,7 @@ void Qwirkle::command() {
             int y = location[0] - 65;
             int x = location[1] - 48;
             if(!gameMap[y][x].isEqual(*emptyTile)) {
-                std::cout << "wrong location, enter other location" << std::endl << "> ";
+                std::cout << "Wrong Location, Try Again" << std::endl << "> ";
                 continue;
             }
             Shape shape = tileOnHold[1] - 48;
@@ -283,14 +283,14 @@ void Qwirkle::command() {
             std::cout << "Good Bye!" << std::endl;
             std::exit(0);
         } else if(firstCommand.find("HELP") != std::string::npos) {
-            std::cout << "save  -   save game" << std::endl;
+            std::cout << "Save  -   Save Game" << std::endl;
             std::cout <<
-                      "place (Tile) at (Location)  -   choose a tile to place at certain location" <<
+                      "Place (Tile) At (Location)  -   Choose A Tile To Place At Certain Location" <<
                       std::endl;
-            std::cout << "quit/exit  -   exit game" << std::endl;
-            std::cout << "help  -   get help" << std::endl;
+            std::cout << "Quit/Exit  -   Exit game" << std::endl;
+            std::cout << "Help  -   Get Help" << std::endl;
         } else {
-            std::cout << "unrecognized Input" << std::endl;
+            std::cout << "Unrecognized Command" << std::endl;
         }
     }
 }
@@ -305,10 +305,10 @@ void Qwirkle::switchTurn() {
 
 void Qwirkle::play() {
     std::cout << player[turn].getName() << ", it's your turn" << std::endl;
-    std::cout << "Score for A: " << player[0].getScore() << std::endl;
-    std::cout << "Score for B: " << player[1].getScore() << std::endl << std::endl;
+    std::cout << "Score For A: " << player[0].getScore() << std::endl;
+    std::cout << "Score For B: " << player[1].getScore() << std::endl << std::endl;
     paintMap();
-    std::cout << std::endl << "Your hand is: " << player[turn].printTiles() <<
+    std::cout << std::endl << "Your Hand Is: " << player[turn].printTiles() <<
               std::endl;
     std::cout << std::endl;
     command();
