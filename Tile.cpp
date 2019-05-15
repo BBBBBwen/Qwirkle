@@ -26,7 +26,9 @@ Colour Tile::getColour() {
 
 //check if two tiles are completely equal
 bool Tile::isEqual(Tile tile) {
-    if(this->colour == tile.getColour() && this->shape == tile.getShape())
-        return true;
-    return false;
+    bool check = false;
+    if(colour == tile.getColour() && shape == tile.getShape()) {
+        check = true;
+    }
+    return check;
 }

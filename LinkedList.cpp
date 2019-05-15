@@ -18,15 +18,17 @@ void LinkedList::addNote(Tile tile) {
     Node* newNode = new Node(tile, nullptr, nullptr);
     if(head == nullptr) {
         head = newNode;
-    }
-    else {
+    } else {
         Node* curr = head;
         while(curr->next != nullptr) {
             curr = curr->next;
         }
+        newNode->next = curr->next;
         curr->next = newNode;
         newNode->previous = curr;
+        curr = nullptr;
     }
+    newNode = nullptr;
     this->maxTiles++;
 }
 
@@ -71,9 +73,13 @@ Tile LinkedList::draw() {
 
 //get a random integer for other purpose
 int LinkedList::getRandom() {
+    int rand = -1;
     std::random_device engine;
     std::uniform_int_distribution<int> dist(0, maxTiles);
-    return dist(engine);
+    while(rand < 0) {
+        rand = dist(engine);
+    }
+    return rand;
 }
 
 //replace the tile from a random node
