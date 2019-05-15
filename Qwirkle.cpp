@@ -162,7 +162,6 @@ void Qwirkle::loadGame() {
                 std::getline(inFile, tempBuffer, '\n');
                 temp = split(tempBuffer, ",");
                 for(unsigned int j = 0; j < temp.size(); j++) {
-                    std::cout << temp[j].print() << std::endl;
                     player[i].addTiles(temp[j]);
                 }
             }
