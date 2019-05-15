@@ -1,15 +1,14 @@
-
 #include "Tile.h"
-Tile::Tile(Shape shape, Colour colour) {
-    this->colour = colour;
-    this->shape = shape;
+Tile::Tile(Shape shape, Colour colour) :
+    colour(colour),
+    shape(shape) {
 };
 
 //print the tile as string
 std::string Tile::print() {
     if(colour == ' ')
         return "  ";
-    char temp[] = {colour,'\0'};
+    char temp[] = {colour, '\0'};
     std::string B = std::to_string(shape);
     std::string str = temp + B;
     return str;
@@ -21,7 +20,7 @@ Shape Tile::getShape() {
 }
 
 //get the colour
-Colour Tile::getColour(){
+Colour Tile::getColour() {
     return colour;
 }
 

@@ -39,7 +39,7 @@ void Player::setName(std::string name) {
 }
 
 //change the score of the player
-void Player::setScore(int score) {
+void Player::setScore(unsigned int score) {
     this->score = score;
 }
 
@@ -47,7 +47,8 @@ void Player::setScore(int score) {
 void Player::addTiles(Tile tile) {
     if(handTiles.getSize() < 6) {
         this->handTiles.addNote(tile);
-    } else {
+    }
+    else {
         throw "too much tiles on hand";
     }
 }

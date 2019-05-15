@@ -38,6 +38,7 @@
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
 		<Unit filename="Qwirkle.cpp" />
+		<Unit filename="Qwirkle.h" />
 		<Unit filename="Tile.cpp" />
 		<Unit filename="Tile.h" />
 		<Unit filename="TileCodes.h" />

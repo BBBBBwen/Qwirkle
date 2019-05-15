@@ -10,5 +10,5 @@ Node::Node(Node& other) :
     previous(other.previous) {
 }
 
-Node::~Node(){
+Node::~Node() {
 }

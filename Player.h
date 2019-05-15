@@ -11,7 +11,7 @@ public:
     std::string getName();
     int getScore();
     LinkedList getTiles();
-    void setScore(int score);
+    void setScore(unsigned int score);
     void addTiles(Tile tile);
     void deleteTiles(Tile tile);
     void setName(std::string name);

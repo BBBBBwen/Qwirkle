@@ -42,10 +42,10 @@
 	<random>
 	<iostream>
 
-1557895306 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
+1557924789 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
 	"Node.h"
 
-1557895306 c:\users\bowen\documents\workplace\qwirkle\node.h
+1557924789 c:\users\bowen\documents\workplace\qwirkle\node.h
 	"Tile.h"
 
 1556971495 c:\users\bowen\documents\workplace\qwirkle\tile.h
@@ -57,26 +57,23 @@
 	<string>
 	<sstream>
 
-1557895621 c:\users\bowen\documents\workplace\qwirkle\player.h
+1557925756 c:\users\bowen\documents\workplace\qwirkle\player.h
 	"Tile.h"
 	"LinkedList.h"
 	<vector>
 
-1557040035 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
+1557924789 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
 	"Node.h"
 	<vector>
 
-1557751838 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
+1557924843 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
 	"Tile.h"
 
-1557905419 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
+1557925745 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
 	"LinkedList.h"
 	"Player.h"
 	"TileCodes.h"
-	<iostream>
-	<fstream>
-	<regex>
-	<sstream>
+	"Qwirkle.h"
 
 1556524900 c:\users\bowen\documents\workplace\qwirkle\tilecodes.h
 
@@ -84,4 +81,10 @@
 	"LinkedList.h"
 	<random>
 	<iostream>
+
+1557925535 c:\users\bowen\documents\workplace\qwirkle\qwirkle.h
+	<iostream>
+	<fstream>
+	<regex>
+	<sstream>
 
