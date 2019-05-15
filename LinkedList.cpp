@@ -54,7 +54,7 @@ void LinkedList::deleteNode(Tile delTile) {
 //get the certain tile from the LinkedList
 Tile LinkedList::get(unsigned int index) {
     Node* curr = head;
-    for(int i = 0; i < index; i++) {
+    for(unsigned int i = 0; i < index; i++) {
         curr = curr->next;
     }
     Tile newTile = curr->tile;
@@ -63,7 +63,6 @@ Tile LinkedList::get(unsigned int index) {
 
 //draw a tile from a random node and delete the node
 Tile LinkedList::draw() {
-    int rand = getRandom();
     Tile newTile = get(getRandom());
     deleteNode(newTile);
     return newTile;

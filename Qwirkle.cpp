@@ -173,14 +173,17 @@ void Qwirkle::loadGame() {
         std::string mapPerLine;
         std::string bagLine;
         for(int i = 0; i < numPlayer; i++) {
-            inFile >> playerName;
-            inFile >> playerScore;
+            std::getline(inFile, playerName, '\n');
+            std::string tempScore = "";
+            std::getline(inFile, tempScore, '\n');
+            playerScore = std::stoi(tempScore);
             std::getline(inFile, playerHand, '\n');
             std::istringstream is(playerHand);
             std::string str;
             while(is >> str) {
-                Tile tile(str.at(0), str.at(1));
-                player[i].addTiles(tile);
+                Tile* tile = new Tile((int)str.at(0) - 48, str.at(1));
+                std::cout << tile->print() << std::endl;
+                player[i].addTiles(*tile);
             }
             player[i].setName(playerName);
             player[i].setScore(playerScore);
@@ -274,8 +277,26 @@ void Qwirkle::command() {
                 continue;
             int y = location[0] - 65;
             int x = location[1] - 48;
+            if(y >= gameMap.size() || x >= gameMap.size()) {
+                int mapSize = 0;
+                if(x >= y)
+                    mapSize = x - gameMap.size() + 1;
+                else
+                    mapSize = y - gameMap.size() + 1;
+                std::vector<Tile> temp;
+                for(int i = 0; i < mapSize; i++) {
+                    for(int j = 0; j < gameMap.size(); j++) {
+                        gameMap[j].push_back(*emptyTile);
+                        temp.push_back(*emptyTile);
+                    }
+                    temp.push_back(*emptyTile);
+                }
+                gameMap.push_back(temp);
+            }
             if(!gameMap[y][x].isEqual(*emptyTile)) {
                 std::cout << "Wrong Location, Try Again" << std::endl << "> ";
+                std::cout << gameMap.size() << std::endl;
+                std::cout << gameMap[0].size() << std::endl;
                 continue;
             }
             Shape shape = tileOnHold[1] - 48;
@@ -433,6 +454,7 @@ bool Qwirkle::isValid(Tile tile, int x, int y) {
     }
     if(checkRow >= 6 || checkCol >= 6)
         return false;
+    bool emptyAll = true;
     for(int i = -1; i < 2; i += 2) {
         if(x + i >= 0 && x + i < gameMap.size())
             if(!gameMap[y][x + i].isEqual(*emptyTile)) {
@@ -443,6 +465,7 @@ bool Qwirkle::isValid(Tile tile, int x, int y) {
                 if(gameMap[y][x + i].isEqual(tile)) {
                     return false;
                 }
+                emptyAll = false;
             }
         if(y + i >= 0 && y + i < gameMap.size())
             if(!gameMap[y + i][x].isEqual(*emptyTile)) {
@@ -453,7 +476,10 @@ bool Qwirkle::isValid(Tile tile, int x, int y) {
                 if(gameMap[y + i][x].isEqual(tile)) {
                     return false;
                 }
+                emptyAll = false;
             }
     }
+    if(emptyAll)
+        return false;
     return true;
 }
