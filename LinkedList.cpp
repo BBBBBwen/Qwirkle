@@ -16,8 +16,9 @@ int LinkedList::getSize() {
 //add a tile to a node and add that node to the LinkedList
 void LinkedList::addNote(Tile tile) {
     Node* newNode = new Node(tile, nullptr, nullptr);
-    if(head == nullptr)
+    if(head == nullptr) {
         head = newNode;
+    }
     else {
         Node* curr = head;
         while(curr->next != nullptr) {

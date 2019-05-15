@@ -19,8 +19,8 @@ public:
     std::string printTiles();
 private:
     std::string name;
-    int score;
-    int maxNumTiles;
+    int         score;
+    int         maxNumTiles;
     LinkedList  handTiles;
 };
 

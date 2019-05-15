@@ -4,7 +4,7 @@
 #include <sstream>
 
 Player::Player() :
-    name(""), score(0), maxNumTiles(6) {
+    name(""), score(0), maxNumTiles(6), handTiles() {
 }
 
 //get player's name
@@ -45,10 +45,11 @@ void Player::setScore(int score) {
 
 //add a tile to player's hand
 void Player::addTiles(Tile tile) {
-    if(handTiles.getSize() < 6)
+    if(handTiles.getSize() < 6) {
         this->handTiles.addNote(tile);
-    else
+    } else {
         throw "too much tiles on hand";
+    }
 }
 
 //delete the tile from player's hand

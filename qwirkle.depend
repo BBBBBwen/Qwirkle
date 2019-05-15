@@ -1,37 +1,75 @@
 # depslib dependency file v1.0
-1557745355 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
+1557752163 source:/home/bowen/Documents/Qwirkle/Node.cpp
 	"Node.h"
 
-1557745348 c:\users\bowen\documents\workplace\qwirkle\node.h
+1557752163 /home/bowen/Documents/Qwirkle/Node.h
 	"Tile.h"
 
-1556971495 c:\users\bowen\documents\workplace\qwirkle\tile.h
+1557752163 /home/bowen/Documents/Qwirkle/Tile.h
 	<string>
 
-1556971495 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
-	"Tile.h"
-
-1557732435 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
-	"LinkedList.h"
-	<random>
-	<iostream>
-
-1557040035 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
-	"Node.h"
-	<vector>
-
-1557729882 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
+1557752163 source:/home/bowen/Documents/Qwirkle/Player.cpp
 	"Player.h"
 	<exception>
 	<string>
 	<sstream>
 
-1557729897 c:\users\bowen\documents\workplace\qwirkle\player.h
+1557752163 /home/bowen/Documents/Qwirkle/Player.h
 	"Tile.h"
 	"LinkedList.h"
 	<vector>
 
-1557744870 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
+1557752163 /home/bowen/Documents/Qwirkle/LinkedList.h
+	"Node.h"
+	<vector>
+
+1557806032 source:/home/bowen/Documents/Qwirkle/Qwirkle.cpp
+	"LinkedList.h"
+	"Player.h"
+	"TileCodes.h"
+	<iostream>
+	<fstream>
+	<regex>
+	<sstream>
+
+1557752163 /home/bowen/Documents/Qwirkle/TileCodes.h
+
+1557752163 source:/home/bowen/Documents/Qwirkle/Tile.cpp
+	"Tile.h"
+
+1557752269 source:/home/bowen/Documents/Qwirkle/LinkedList.cpp
+	"LinkedList.h"
+	<random>
+	<iostream>
+
+1557895306 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
+	"Node.h"
+
+1557895306 c:\users\bowen\documents\workplace\qwirkle\node.h
+	"Tile.h"
+
+1556971495 c:\users\bowen\documents\workplace\qwirkle\tile.h
+	<string>
+
+1557896060 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
+	"Player.h"
+	<exception>
+	<string>
+	<sstream>
+
+1557895621 c:\users\bowen\documents\workplace\qwirkle\player.h
+	"Tile.h"
+	"LinkedList.h"
+	<vector>
+
+1557040035 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
+	"Node.h"
+	<vector>
+
+1557751838 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
+	"Tile.h"
+
+1557905419 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
 	"LinkedList.h"
 	"Player.h"
 	"TileCodes.h"
@@ -41,4 +79,9 @@
 	<sstream>
 
 1556524900 c:\users\bowen\documents\workplace\qwirkle\tilecodes.h
+
+1557897603 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
+	"LinkedList.h"
+	<random>
+	<iostream>
 
