@@ -486,7 +486,7 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
     for(unsigned int i = 0; i < tile.size(); i++) {
         score += colScore[i] + rowScore[i];
     }
-    player[turn].setScore(score);
+    player[turn].setScore(player[turn].getScore() + score);
     if(bag.getSize() != 0) {
         player[turn].addTiles(bag.draw());
     }
@@ -565,6 +565,7 @@ int Qwirkle::calculateColScore(Tile& tile, const unsigned int& x,
 bool Qwirkle::isValid(std::vector<Tile>& tile,
                       std::vector<std::string> location) {
     bool returnCheck = true;
+    unsigned int j = 0;
     for(unsigned int i = 0; i < tile.size(); i++) {
         char* end = nullptr;
         int y = location[i].substr(0, 1)[0] - 65;
@@ -576,15 +577,23 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         else if(!isColValid(tile[i], x, y) || !isRowValid(tile[i], x, y)) {
             returnCheck = false;
         }
+        else {
+            gameMap[y][x] = tile[i];
+            j++;
+            if(j <= tile.size()) {
+                i = 0;
+                returnCheck = true;
+            }
+            else {
+                i = tile.size();
+            }
+        }
+    }
+    for(unsigned int i = 0; i < tile.size(); i++) {
         if(!returnCheck) {
             std::cout << "You Cant Place " << tile[i].print() << " At " << location[i] <<
                       std::endl;
         }
-        else {
-            gameMap[y][x] = tile[i];
-        }
-    }
-    for(unsigned int i = 0; i < tile.size(); i++) {
         char* end = nullptr;
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), &end, 10);

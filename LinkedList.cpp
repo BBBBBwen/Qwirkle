@@ -28,8 +28,10 @@ void LinkedList::addNote(Tile tile) {
         curr->next = newNode;
         newNode->previous = curr;
         curr = nullptr;
+        delete curr;
     }
     newNode = nullptr;
+    delete newNode;
     this->maxTiles++;
 }
 
@@ -49,8 +51,11 @@ void LinkedList::deleteNode(Tile delTile) {
         if(delPtr == head) {
             head = head->next;
             temp = nullptr;
+            delete temp;
         }
     }
+    curr = nullptr;
+    delete curr;
     delete delPtr;
     this->maxTiles--;
 }
@@ -62,6 +67,8 @@ Tile LinkedList::get(unsigned int index) {
         curr = curr->next;
     }
     Tile newTile = curr->tile;
+    curr = nullptr;
+    delete curr;
     return newTile;
 }
 
