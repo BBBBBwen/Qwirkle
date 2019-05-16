@@ -313,7 +313,7 @@ bool Qwirkle::replaceCommand(std::string tileOnHold) {
     bool check = false;
     Tile tile(tileOnHold);
     std::string colours = "ROYGBP";
-    if(tileOnHold.find(",") == std::string::npos) {
+    if(tileOnHold.find(",") != std::string::npos) {
         std::cout << "Cant Replace Mutiple Tiles" << std::endl;
     }
     else if(colours.find(tile.getColour()) == std::string::npos
@@ -579,16 +579,17 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         if(!returnCheck) {
             std::cout << "You Cant Place " << tile[i].print() << " At " << location[i] <<
                       std::endl;
-        }else{
+        }
+        else {
             gameMap[y][x] = tile[i];
         }
     }
-        for(int i = 0;i < tile.size(); i++) {
+    for(unsigned int i = 0; i < tile.size(); i++) {
         char* end = nullptr;
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), &end, 10);
         gameMap[y][x] = emptyTile;
-        }
+    }
     return returnCheck;
 }
 
@@ -706,7 +707,13 @@ bool Qwirkle::isRowValid(Tile& tile, const unsigned int& x,
 
 //check if the location is empty
 bool Qwirkle::isEmpty(const unsigned int& x, const unsigned int& y) {
-    bool check = gameMap[y][x] == emptyTile;
+    bool check = false;
+    if(x >= gameMap.size() || y >= gameMap.size()) {
+        check = true;
+    }
+    else {
+        check = gameMap[y][x] == emptyTile;
+    }
     return check;
 }
 
