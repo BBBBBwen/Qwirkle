@@ -186,7 +186,7 @@ void Qwirkle::loadGame() {
             turn = std::stoi(tempBuffer);
         }
         //delete \n in buffer
-    std::cin.get();
+        std::cin.get();
         //start playing
         while(!gameOver()) {
             play();
@@ -342,6 +342,9 @@ void Qwirkle::helpCommand() {
     std::cout << "Save   -   Save Game" << std::endl;
     std::cout << "Place (Tile) At (Location)   -   " <<
               "Choose A Tile To Place At Certain Location" << std::endl;
+    std::cout <<
+              "Place (Tile),(Tile)... At (Location),(Location)...   -   Place Mutiple Tile Using ',' To Seperate Tile And Location"
+              << std::endl;
     std::cout << "Replace (Tile)   -   Replace The Chosen Tile With A New One" <<
               std::endl;
     std::cout << "Quit/Exit   -   Exit game" << std::endl;
