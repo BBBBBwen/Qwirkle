@@ -385,8 +385,6 @@ bool Qwirkle::placeAtCommand(std::string tiles, std::string locations) {
             check = false;
         }
         else if(!isValid(tile, location)) {
-            std::cout << "You Cant Place " << tile[i].print() << " At " << location[i] <<
-                      std::endl;
             check = false;
         }
     }
@@ -445,6 +443,9 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
     std::vector<int> colScore;
     std::vector<int> rowScore;
     int score = 0;
+    if(isFirstTile) {
+        score += 1;
+    }
     std::vector<int> xVec;
     std::vector<int> yVec;
     for(unsigned int i = 0; i < tile.size(); i++) {
@@ -575,7 +576,19 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         else if(!isColValid(tile[i], x, y) || !isRowValid(tile[i], x, y)) {
             returnCheck = false;
         }
+        if(!returnCheck) {
+            std::cout << "You Cant Place " << tile[i].print() << " At " << location[i] <<
+                      std::endl;
+        }else{
+            gameMap[y][x] = tile[i];
+        }
     }
+        for(int i = 0;i < tile.size(); i++) {
+        char* end = nullptr;
+        int y = location[i].substr(0, 1)[0] - 65;
+        int x = strtol(location[i].substr(1).c_str(), &end, 10);
+        gameMap[y][x] = emptyTile;
+        }
     return returnCheck;
 }
 
@@ -597,13 +610,15 @@ bool Qwirkle::isColValid(Tile& tile, const unsigned int& x,
                 checkEqual = false;
                 checkDown = false;
             }
-            else if(gameMap[y + i][x].getColour() != tile.getColour()) {
-                sameColour = false;
-                numCol++;
-            }
-            else if(gameMap[y + i][x].getShape() != tile.getShape()) {
-                sameShape = false;
-                numCol++;
+            else {
+                if(gameMap[y + i][x].getColour() != tile.getColour()) {
+                    sameColour = false;
+                    numCol++;
+                }
+                if(gameMap[y + i][x].getShape() != tile.getShape()) {
+                    sameShape = false;
+                    numCol++;
+                }
             }
         }
         //check tiles above is valid
@@ -615,13 +630,15 @@ bool Qwirkle::isColValid(Tile& tile, const unsigned int& x,
                 checkEqual = false;
                 checkUp = false;
             }
-            else if(gameMap[y - i][x].getColour() != tile.getColour()) {
-                sameColour = false;
-                numCol++;
-            }
-            else if(gameMap[y - i][x].getShape() != tile.getShape()) {
-                sameShape = false;
-                numCol++;
+            else {
+                if(gameMap[y - i][x].getColour() != tile.getColour()) {
+                    sameColour = false;
+                    numCol++;
+                }
+                if(gameMap[y - i][x].getShape() != tile.getShape()) {
+                    sameShape = false;
+                    numCol++;
+                }
             }
         }
     }
@@ -649,13 +666,15 @@ bool Qwirkle::isRowValid(Tile& tile, const unsigned int& x,
                 checkEqual = false;
                 checkRight = false;
             }
-            else if(gameMap[y][x + i].getColour() != tile.getColour()) {
-                sameColour = false;
-                numRow++;
-            }
-            else if(gameMap[y][x + i].getShape() != tile.getShape()) {
-                sameShape = false;
-                numRow++;
+            else {
+                if(gameMap[y][x + i].getColour() != tile.getColour()) {
+                    sameColour = false;
+                    numRow++;
+                }
+                if(gameMap[y][x + i].getShape() != tile.getShape()) {
+                    sameShape = false;
+                    numRow++;
+                }
             }
         }
         //check tiles on the left is valid
@@ -667,13 +686,15 @@ bool Qwirkle::isRowValid(Tile& tile, const unsigned int& x,
                 checkEqual = false;
                 checkLeft = false;
             }
-            else if(gameMap[y][x - i].getColour() != tile.getColour()) {
-                sameColour = false;
-                numRow++;
-            }
-            else if(gameMap[y][x - i].getShape() != tile.getShape()) {
-                sameShape = false;
-                numRow++;
+            else {
+                if(gameMap[y][x - i].getColour() != tile.getColour()) {
+                    sameColour = false;
+                    numRow++;
+                }
+                if(gameMap[y][x - i].getShape() != tile.getShape()) {
+                    sameShape = false;
+                    numRow++;
+                }
             }
         }
     }
