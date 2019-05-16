@@ -18,52 +18,44 @@ void LinkedList::addNote(Tile tile) {
     Node* newNode = new Node(tile, nullptr, nullptr);
     if(head == nullptr) {
         head = newNode;
-    }
-    else {
+    } else {
         Node* curr = head;
         while(curr->next != nullptr) {
             curr = curr->next;
         }
-        newNode->next = curr->next;
-        curr->next = newNode;
         newNode->previous = curr;
+        curr->next = newNode;
         curr = nullptr;
-        delete curr;
     }
     newNode = nullptr;
-    delete newNode;
     this->maxTiles++;
 }
 
 //delete the node that the tile belonged to
 void LinkedList::deleteNode(Tile delTile) {
-    Node* delPtr = nullptr;
     Node* curr = head;
-    Node* temp = head;
     while(curr != nullptr && curr->tile != delTile) {
-        temp = curr;
         curr = curr->next;
     }
     if(curr) {
-        delPtr = curr;
-        curr = curr->next;
-        temp->next = curr;
-        if(delPtr == head) {
+        if(curr == head) {
             head = head->next;
-            temp = nullptr;
-            delete temp;
+        } else if(curr->next == nullptr) {
+            curr->previous->next = nullptr;
+        } else {
+            curr->previous->next = curr->next;
+            curr->next->previous = curr->previous;
         }
     }
-    curr = nullptr;
     delete curr;
-    delete delPtr;
+    curr = nullptr;
     this->maxTiles--;
 }
 
 //get the certain tile from the LinkedList
-Tile LinkedList::get(unsigned int index) {
+Tile LinkedList::get(int index) {
     Node* curr = head;
-    for(unsigned int i = 0; i < index; i++) {
+    for(int i = 0; i < index; i++) {
         curr = curr->next;
     }
     Tile newTile = curr->tile;
@@ -102,3 +94,15 @@ Tile LinkedList::replaceTile(Tile tile) {
     return newTile;
 }
 
+void LinkedList::deleteAll() {
+    Node* curr = head;
+    Node* temp = nullptr;
+    while(curr -> next != nullptr) {
+        temp = curr;
+        curr = curr->next;
+        delete temp;
+        temp = nullptr;
+    }
+    delete curr;
+    curr = nullptr;
+}

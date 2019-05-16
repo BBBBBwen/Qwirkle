@@ -10,10 +10,11 @@ public:
     ~LinkedList();
     int getSize();
     void addNote(Tile tile);
-    Tile get(unsigned int index);
+    Tile get(int index);
     Tile draw();
     Tile replaceTile(Tile tile);
     void deleteNode(Tile delTile);
+    void deleteAll();
     int getRandom();
 
 private:

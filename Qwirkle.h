@@ -24,7 +24,6 @@ public:
     void placeTile(std::vector<Tile> tile, std::vector<std::string> location);
     void play();
     void extendMap(unsigned int mapSize);
-    void exitCommand();
     void helpCommand();
     bool placeAtCommand(std::string tiles, std::string location);
     bool replaceCommand(std::string tiles);
@@ -49,6 +48,7 @@ private:
     int numPlayer = 2;
     int turn = 0;
     bool isFirstTile = true;
+    bool gamePlay = true;
     Player* player = new Player[numPlayer];
     std::vector< std::vector<Tile> > gameMap;
 };
