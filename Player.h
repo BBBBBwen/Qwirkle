@@ -8,6 +8,7 @@ class Player {
 public:
 
     Player();
+    ~Player();
     std::string getName();
     int getScore();
     LinkedList getTiles();

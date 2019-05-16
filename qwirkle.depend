@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1557983085 source:c:\users\bowen\documents\workplace\qwirkle\node.cpp
+	"Node.h"
+
+1557995922 c:\users\bowen\documents\workplace\qwirkle\node.h
+	"Tile.h"
+
+1557989554 c:\users\bowen\documents\workplace\qwirkle\tile.h
+	<iostream>
+	<string>
+
+1557995922 source:c:\users\bowen\documents\workplace\qwirkle\player.cpp
+	"Player.h"
+	<exception>
+	<string>
+	<sstream>
+
+1557982802 c:\users\bowen\documents\workplace\qwirkle\player.h
+	"Tile.h"
+	"LinkedList.h"
+	<vector>
+
+1557924789 c:\users\bowen\documents\workplace\qwirkle\linkedlist.h
+	"Node.h"
+	<vector>
+
+1557995922 source:c:\users\bowen\documents\workplace\qwirkle\linkedlist.cpp
+	"LinkedList.h"
+	<random>
+	<iostream>
+
+1557996112 source:c:\users\bowen\documents\workplace\qwirkle\qwirkle.cpp
+	"LinkedList.h"
+	"Player.h"
+	"TileCodes.h"
+	"Qwirkle.h"
+
+1557995922 c:\users\bowen\documents\workplace\qwirkle\tilecodes.h
+
+1557995422 c:\users\bowen\documents\workplace\qwirkle\qwirkle.h
+	<iostream>
+	<fstream>
+	<regex>
+
+1557996401 source:c:\users\bowen\documents\workplace\qwirkle\tile.cpp
+	"Tile.h"
+	"ColourText.h"
+
+1557817094 c:\users\bowen\documents\workplace\qwirkle\colourtext.h
+

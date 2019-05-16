@@ -7,6 +7,8 @@ Player::Player() :
     name(""), score(0), maxNumTiles(6), handTiles() {
 }
 
+Player::~Player() {
+}
 //get player's name
 std::string Player::getName() {
     return name;
@@ -61,7 +63,7 @@ void Player::deleteTiles(Tile tile) {
 //check if the player has the certain tile
 bool Player::hasTile(Tile tile) {
     for(int i = 0; i < handTiles.getSize(); i++) {
-        if(handTiles.get(i).isEqual(tile)) {
+        if(handTiles.get(i) == tile) {
             return true;
         }
     }

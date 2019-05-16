@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
-#include <sstream>
 
 class Qwirkle {
 public:
@@ -22,26 +21,27 @@ public:
     void initialBag();
     void initialMap();
     void paintMap();
-    void placeTile(Tile tile, const unsigned int locationX,
-                   const unsigned int locationY);
+    void placeTile(std::vector<Tile> tile, std::vector<std::string> location);
     void play();
     void extendMap(unsigned int mapSize);
     void exitCommand();
     void helpCommand();
-    bool placeAtCommand();
-    bool replaceCommand();
-    bool isValid(Tile& tile, const int& x, const int& y);
+    bool placeAtCommand(std::string tiles, std::string location);
+    bool replaceCommand(std::string tiles);
+    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location);
     bool isColValid(Tile& tile, const unsigned int& x, const unsigned int& y);
     bool isRowValid(Tile& tile, const unsigned int& x, const unsigned int& y);
-    int calculateScore(Tile& tile, const unsigned int& locationX,
-                       const unsigned int& locationY);
-
+    int calculateColScore(Tile& tile, const unsigned int& x, const unsigned int& y);
+    int calculateRowScore(Tile& tile, const unsigned int& x, const unsigned int& y);
     //helper fuctions
     bool gameOver();
     void switchTurn();
     bool isEmpty(const unsigned int& x, const unsigned int& y);
     void toUpperCase(std::string& str);
-    std::vector<Tile> split(const std::string& str, const std::string& delimiter);
+    std::vector<Tile> splitToTile(const std::string& str,
+                                  const std::string& delimiter);
+    std::vector<std::string> splitToString(const std::string& str,
+                                           const std::string& delimiter);
 
 private:
     LinkedList bag;

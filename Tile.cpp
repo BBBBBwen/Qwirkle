@@ -1,16 +1,27 @@
 #include "Tile.h"
+#include "ColourText.h"
+
 Tile::Tile(Shape shape, Colour colour) :
     colour(colour),
     shape(shape) {
 };
 
+Tile::Tile(std::string tileString) :
+    colour(tileString[0]),
+    shape(tileString[1] - 48) {
+}
+
+Tile::~Tile() {
+}
+
 //print the tile as string
 std::string Tile::print() {
-    if(colour == ' ')
-        return "  ";
     char temp[] = {colour, '\0'};
     std::string B = std::to_string(shape);
     std::string str = temp + B;
+    if(colour == ' ') {
+        str = "  ";
+    }
     return str;
 }
 
@@ -25,9 +36,17 @@ Colour Tile::getColour() {
 }
 
 //check if two tiles are completely equal
-bool Tile::isEqual(Tile tile) {
+bool Tile::operator==(Tile& tile) const {
     bool check = false;
     if(colour == tile.getColour() && shape == tile.getShape()) {
+        check = true;
+    }
+    return check;
+}
+
+bool Tile::operator!=(Tile& tile) const {
+    bool check = false;
+    if(colour != tile.getColour() && shape != tile.getShape()) {
         check = true;
     }
     return check;

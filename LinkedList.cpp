@@ -18,7 +18,8 @@ void LinkedList::addNote(Tile tile) {
     Node* newNode = new Node(tile, nullptr, nullptr);
     if(head == nullptr) {
         head = newNode;
-    } else {
+    }
+    else {
         Node* curr = head;
         while(curr->next != nullptr) {
             curr = curr->next;
@@ -37,7 +38,7 @@ void LinkedList::deleteNode(Tile delTile) {
     Node* delPtr = nullptr;
     Node* curr = head;
     Node* temp = head;
-    while(curr != nullptr && !curr->tile.isEqual(delTile)) {
+    while(curr != nullptr && curr->tile != delTile) {
         temp = curr;
         curr = curr->next;
     }
@@ -87,7 +88,7 @@ Tile LinkedList::replaceTile(Tile tile) {
     int rand = getRandom();
     Tile newTile = get(rand);
     Node* temp = head;
-    while(!temp->tile.isEqual(tile)) {
+    while(temp->tile != tile) {
         temp = temp->next;
     }
     temp->tile = tile;
