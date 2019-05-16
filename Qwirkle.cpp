@@ -245,9 +245,9 @@ void Qwirkle::showInfo() {
     std::cout << "Name: <>" << std::endl;
     std::cout << "Student ID: <>" << std::endl;
     std::cout << "Email: <>" << std::endl << std::endl;
-    std::cout << "Name: <>" << std::endl;
-    std::cout << "Student ID: <>" << std::endl;
-    std::cout << "Email: <>" << std::endl << std::endl;
+    std::cout << "Name: <Lucas Strilakos>" << std::endl;
+    std::cout << "Student ID: <s3722050>" << std::endl;
+    std::cout << "Email: <s3722050@student.rmit.edu.au>" << std::endl << std::endl;
     std::cout << "Name: <>" << std::endl;
     std::cout << "Student ID: <>" << std::endl;
     std::cout << "Email: <>" << std::endl << std::endl;
