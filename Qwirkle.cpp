@@ -442,7 +442,7 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
                         std::vector<std::string> location) {
     std::vector<int> colScore;
     std::vector<int> rowScore;
-    int score = 0;
+    int score = player[turn].getScore();
     if(isFirstTile) {
         score += 1;
     }
@@ -462,31 +462,39 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
     for(unsigned int i = 0; i < xVec.size(); i++) {
         for(unsigned int j = i; j < xVec.size(); j++) {
             if(xVec[j] == xVec[j + 1]) {
+                std::cout << xVec[j] << ": " << rowScore[j] << std::endl;
+                std::cout << xVec[j + 1] << ": " << rowScore[j + 1] << std::endl;
                 if(rowScore[j] > rowScore[j + 1]) {
                     rowScore[j + 1] = 0;
                 }
                 else {
                     rowScore[j] = 0;
                 }
+                std::cout << xVec[j] << ": " << rowScore[j] << std::endl;
+                std::cout << xVec[j + 1] << ": " << rowScore[j + 1] << std::endl;
             }
         }
     }
     for(unsigned int i = 0; i < yVec.size(); i++) {
         for(unsigned int j = i; j < yVec.size(); j++) {
             if(yVec[j] == yVec[j + 1]) {
+                std::cout << yVec[j] << ": " << colScore[j] << std::endl;
+                std::cout << yVec[j + 1] << ": " << colScore[j + 1] << std::endl;
                 if(colScore[j] > colScore[j + 1]) {
                     colScore[j + 1] = 0;
                 }
                 else {
                     colScore[j] = 0;
                 }
+                std::cout << yVec[j] << ": " << colScore[j] << std::endl;
+                std::cout << yVec[j + 1] << ": " << colScore[j + 1] << std::endl;
             }
         }
     }
     for(unsigned int i = 0; i < tile.size(); i++) {
         score += colScore[i] + rowScore[i];
     }
-    player[turn].setScore(player[turn].getScore() + score);
+    player[turn].setScore(score);
     if(bag.getSize() != 0) {
         player[turn].addTiles(bag.draw());
     }
@@ -565,11 +573,21 @@ int Qwirkle::calculateColScore(Tile& tile, const unsigned int& x,
 bool Qwirkle::isValid(std::vector<Tile>& tile,
                       std::vector<std::string> location) {
     bool returnCheck = true;
+    bool checkShape = true;
+    bool checkColour = true;
+    Shape shape = tile[0].getShape();
+    Colour colour = tile[0].getColour();
     unsigned int j = 0;
     for(unsigned int i = 0; i < tile.size(); i++) {
         char* end = nullptr;
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), &end, 10);
+        if(tile[i].getShape() != shape) {
+            checkShape = false;
+        }
+        if(tile[i].getColour() != colour) {
+            checkColour = false;
+        }
         if(isEmpty(x + 1, y) && isEmpty(std::abs(x - 1), y) &&
                 isEmpty(x, y + 1) && isEmpty(x, std::abs(y - 1))) {
             returnCheck = isFirstTile;
@@ -588,6 +606,9 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
                 i = tile.size();
             }
         }
+    }
+    if(!checkColour && !checkShape) {
+        returnCheck = false;
     }
     for(unsigned int i = 0; i < tile.size(); i++) {
         if(!returnCheck) {
