@@ -1,11 +1,18 @@
 #ifndef ASSIGN2_QWIRKLE_H
 #define ASSIGN2_QWIRKLE_H
 
+#include "LinkedList.h"
+#include "Player.h"
+#include "TileCodes.h"
+#include "Board.h"
+
 #include <iostream>
 #include <fstream>
 #include <regex>
 
+
 class Qwirkle {
+
 public:
     Qwirkle();
     ~Qwirkle();
@@ -19,19 +26,10 @@ public:
 
     //secondery functions
     void initialBag();
-    void initialMap();
-    void paintMap();
-    void placeTile(std::vector<Tile> tile, std::vector<std::string> location);
     void play();
-    void extendMap(unsigned int mapSize);
     void helpCommand();
     bool placeAtCommand(std::string tiles, std::string location);
     bool replaceCommand(std::string tiles);
-    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location);
-    bool isColValid(Tile& tile, const unsigned int& x, const unsigned int& y);
-    bool isRowValid(Tile& tile, const unsigned int& x, const unsigned int& y);
-    int calculateColScore(Tile& tile, const unsigned int& x, const unsigned int& y);
-    int calculateRowScore(Tile& tile, const unsigned int& x, const unsigned int& y);
     //helper fuctions
     void gameOver();
     void switchTurn();
@@ -50,7 +48,8 @@ private:
     bool isFirstTile = true;
     bool gamePlay = true;
     Player* player;
-    std::vector< std::vector<Tile> > gameMap;
+    Board* board;
+
 };
 
 #endif // ASSIGN2_QWIRKLE_H
