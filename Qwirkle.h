@@ -33,7 +33,7 @@ public:
     int calculateColScore(Tile& tile, const unsigned int& x, const unsigned int& y);
     int calculateRowScore(Tile& tile, const unsigned int& x, const unsigned int& y);
     //helper fuctions
-    bool gameOver();
+    void gameOver();
     void switchTurn();
     bool isEmpty(const unsigned int& x, const unsigned int& y);
     void toUpperCase(std::string& str);

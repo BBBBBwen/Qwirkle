@@ -63,9 +63,9 @@ bool Tile::operator==(Tile& tile) const {
 }
 
 bool Tile::operator!=(Tile& tile) const {
-    bool check = false;
-    if(colour != tile.getColour() && shape != tile.getShape()) {
-        check = true;
+    bool check = true;
+    if(this->colour == tile.getColour() && this->shape == tile.getShape()) {
+        check = false;
     }
     return check;
 }

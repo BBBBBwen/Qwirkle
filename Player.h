@@ -11,6 +11,7 @@ public:
     ~Player();
     std::string getName();
     int getScore();
+    int getNumTiles();
     LinkedList getTiles();
     void setScore(unsigned int score);
     void addTiles(Tile tile);
@@ -21,7 +22,7 @@ public:
 private:
     std::string name;
     int         score;
-    int         maxNumTiles;
+    int         numTiles;
     LinkedList  handTiles;
 };
 

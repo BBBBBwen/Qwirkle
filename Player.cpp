@@ -4,11 +4,12 @@
 #include <sstream>
 
 Player::Player() :
-    name(""), score(0), maxNumTiles(6), handTiles() {
+    name(""), score(0), numTiles(0), handTiles() {
 }
 
 Player::~Player() {
 }
+
 //get player's name
 std::string Player::getName() {
     return name;
@@ -24,6 +25,9 @@ LinkedList Player::getTiles() {
     return handTiles;
 }
 
+int Player::getNumTiles() {
+    return numTiles;
+}
 //print all tiles on player's hand
 std::string Player::printTiles() {
     std::string str = "";
@@ -49,15 +53,18 @@ void Player::setScore(unsigned int score) {
 void Player::addTiles(Tile tile) {
     if(handTiles.getSize() < 6) {
         this->handTiles.addNote(tile);
-    }
-    else {
+        numTiles++;
+    } else {
         throw "too much tiles on hand";
     }
 }
 
 //delete the tile from player's hand
 void Player::deleteTiles(Tile tile) {
-    this->handTiles.deleteNode(tile);
+    if(hasTile(tile)) {
+        this->handTiles.deleteNode(tile);
+        numTiles--;
+    }
 }
 
 //check if the player has the certain tile

@@ -14,7 +14,6 @@ public:
     Tile draw();
     Tile replaceTile(Tile tile);
     void deleteNode(Tile delTile);
-    void deleteAll();
     int getRandom();
 
 private:

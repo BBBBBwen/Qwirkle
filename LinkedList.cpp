@@ -7,6 +7,14 @@ LinkedList::LinkedList() :
 }
 
 LinkedList::~LinkedList() {
+    for(int i = 0;i < maxTiles; i++) {
+        Node* del = head;
+        head = head->next;
+        if(del){
+            delete del;
+            del = nullptr;
+        }
+    }
 }
 
 int LinkedList::getSize() {
@@ -25,9 +33,7 @@ void LinkedList::addNote(Tile tile) {
         }
         newNode->previous = curr;
         curr->next = newNode;
-        curr = nullptr;
     }
-    newNode = nullptr;
     this->maxTiles++;
 }
 
@@ -59,14 +65,13 @@ Tile LinkedList::get(int index) {
         curr = curr->next;
     }
     Tile newTile = curr->tile;
-    curr = nullptr;
-    delete curr;
     return newTile;
 }
 
 //draw a tile from a random node and delete the node
 Tile LinkedList::draw() {
-    Tile newTile = get(getRandom());
+    int rand = getRandom();
+    Tile newTile = get(rand);
     deleteNode(newTile);
     return newTile;
 }
@@ -75,7 +80,7 @@ Tile LinkedList::draw() {
 int LinkedList::getRandom() {
     int rand = -1;
     std::random_device engine;
-    std::uniform_int_distribution<int> dist(0, maxTiles);
+    std::uniform_int_distribution<int> dist(0, maxTiles - 1);
     while(rand < 0) {
         rand = dist(engine);
     }
@@ -84,25 +89,7 @@ int LinkedList::getRandom() {
 
 //replace the tile from a random node
 Tile LinkedList::replaceTile(Tile tile) {
-    int rand = getRandom();
-    Tile newTile = get(rand);
-    Node* temp = head;
-    while(temp->tile != tile) {
-        temp = temp->next;
-    }
-    temp->tile = tile;
+    Tile newTile = draw();
+    addNote(tile);
     return newTile;
-}
-
-void LinkedList::deleteAll() {
-    Node* curr = head;
-    Node* temp = nullptr;
-    while(curr -> next != nullptr) {
-        temp = curr;
-        curr = curr->next;
-        delete temp;
-        temp = nullptr;
-    }
-    delete curr;
-    curr = nullptr;
 }
