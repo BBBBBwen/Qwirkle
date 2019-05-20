@@ -45,11 +45,11 @@ public:
 private:
     LinkedList bag;
     Tile emptyTile;
-    int numPlayer = 2;
+    int numPlayer = 0;
     int turn = 0;
     bool isFirstTile = true;
     bool gamePlay = true;
-    Player* player = new Player[numPlayer];
+    Player* player;
     std::vector< std::vector<Tile> > gameMap;
 };
 

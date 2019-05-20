@@ -8,7 +8,7 @@ Tile::Tile(Shape shape, Colour colour) :
 
 Tile::Tile(std::string tileString) :
     colour(tileString[0]),
-    shape(tileString[1] - 48) {
+    shape(strtol(tileString.substr(1).c_str(), NULL, 10)) {
 }
 
 Tile::~Tile() {
@@ -21,25 +21,6 @@ std::string Tile::print() {
     char temp[] = {colour, '\0'};
     std::string B = std::to_string(shape);
     std::string str = temp + B;
-    if(colour == 'R') {
-        std::string tc = RED + str + WHITE;
-        str = tc;
-    } else if(colour == 'G') {
-        std::string tc = GREEN + str + WHITE;
-        str = tc;
-    } else if(colour == 'Y') {
-        std::string tc = YELLOW + str + WHITE;
-        str = tc;
-    } else if(colour == 'B') {
-        std::string tc = BLUE + str + WHITE;
-        str = tc;
-    } else if(colour == 'P') {
-        std::string tc = MAGENTA + str + WHITE;
-        str = tc;
-    } else if(colour == 'O') {
-        std::string tc = ORANGE + str + WHITE;
-        str = tc;
-    }
     return str;
 }
 
