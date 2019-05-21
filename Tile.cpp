@@ -24,24 +24,19 @@ std::string Tile::print() {
     if(colour == 'R') {
         std::string tc = RED + str + WHITE;
         str = tc;
-    }
-    else if(colour == 'G') {
+    } else if(colour == 'G') {
         std::string tc = GREEN + str + WHITE;
         str = tc;
-    }
-    else if(colour == 'Y') {
+    } else if(colour == 'Y') {
         std::string tc = YELLOW + str + WHITE;
         str = tc;
-    }
-    else if(colour == 'B') {
+    } else if(colour == 'B') {
         std::string tc = BLUE + str + WHITE;
         str = tc;
-    }
-    else if(colour == 'P') {
+    } else if(colour == 'P') {
         std::string tc = MAGENTA + str + WHITE;
         str = tc;
-    }
-    else if(colour == 'O') {
+    } else if(colour == 'O') {
         std::string tc = ORANGE + str + WHITE;
         str = tc;
     }

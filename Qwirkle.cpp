@@ -23,8 +23,6 @@ Qwirkle::Qwirkle() :
 }
 
 Qwirkle::~Qwirkle() {
-    delete[] player;
-    player = nullptr;
 }
 
 //initialise the bag, put every tile into the bag
@@ -75,6 +73,7 @@ void Qwirkle::menu() {
         menu();
     } else if(choose == 4) {
         std::cout << "Good Bye!" << std::endl;
+        gamePlay = false;
     } else {
         std::cout << "Unrecognised Input, Try Again" << std::endl;
         menu();
@@ -156,6 +155,7 @@ void Qwirkle::saveGame(std::string fileName) {
     }
     outFile << std::endl << turn;
     outFile.close();
+    std::cout << "Save Successfully" << std::endl;
 }
 
 //load game data from the file
@@ -254,9 +254,9 @@ void Qwirkle::showInfo() {
     std::cout << "Name: <Bowen Zhang>" << std::endl;
     std::cout << "Student ID: <s3617571>" << std::endl;
     std::cout << "Email: <s3617571@student.rmit.edu.au>" << std::endl << std::endl;
-    std::cout << "Name: <>" << std::endl;
-    std::cout << "Student ID: <>" << std::endl;
-    std::cout << "Email: <>" << std::endl << std::endl;
+    std::cout << "Name: <Cheng Chen>" << std::endl;
+    std::cout << "Student ID: <s3728207>" << std::endl;
+    std::cout << "Email: <s3728207@student.rmit.edu.au>" << std::endl << std::endl;
     std::cout << "Name: <Lucas Strilakos>" << std::endl;
     std::cout << "Student ID: <s3722050>" << std::endl;
     std::cout << "Email: <s3722050@student.rmit.edu.au>" << std::endl << std::endl;
@@ -299,8 +299,11 @@ void Qwirkle::command() {
         tempStr = splitToString(command, " ");
         if(command.compare("SAVE") == 0) {
             std::cout << "Enter File Name You Want To Save" << std::endl;
+            std::cout << "> ";
             std::cin >> command;
             saveGame(command);
+            check = true;
+            menu();
         } else if(tempStr[0].compare("PLACE") == 0 && tempStr.size() == 4) {
             if(tempStr[2].compare("AT") == 0) {
                 check = placeAtCommand(tempStr[1], tempStr[3]);
