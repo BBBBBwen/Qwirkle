@@ -17,12 +17,16 @@ int main(void) {
 }
 
 Qwirkle::Qwirkle() :
-    emptyTile(9, ' ') {
+    emptyTile(9, ' '), player(nullptr) {
     initialBag();
     initialMap();
 }
 
 Qwirkle::~Qwirkle() {
+    if(player) {
+        delete[] player;
+        player = nullptr;
+    }
 }
 
 //initialise the bag, put every tile into the bag
@@ -120,9 +124,7 @@ void Qwirkle::newGame() {
     //delete \n in buffer
     std::cin.get();
     //start playing
-    while(gamePlay) {
-        play();
-    }
+    play();
 }
 
 //save game data to the file
@@ -130,16 +132,17 @@ void Qwirkle::saveGame(std::string fileName) {
     std::ofstream outFile;
     outFile.open(fileName + ".sav");
     //store name, score and tiles on hand first
+    outFile << numPlayer << std::endl;
     for(int i = 0; i < numPlayer; i++) {
         outFile << player[i].getName() << std::endl;
         outFile << player[i].getScore() << std::endl;
-        outFile << player[i].printTiles() << std::endl;
+        outFile << player[i].printPlainTiles() << std::endl;
     }
     //store map
     outFile << gameMap.size() << std::endl;
     for(unsigned int i = 0; i < gameMap.size(); i++) {
         for(unsigned int j = 0; j < gameMap[0].size(); j++) {
-            outFile << gameMap[i][j].print();
+            outFile << gameMap[i][j].printPlainTile();
             if(j < gameMap[0].size() - 1) {
                 outFile << ",";
             }
@@ -148,7 +151,7 @@ void Qwirkle::saveGame(std::string fileName) {
     }
     //store what is in the bag
     for(int i = 0; i < bag.getSize(); i++) {
-        outFile << bag.get(i).print();
+        outFile << bag.get(i).printPlainTile();
         if(i < bag.getSize() - 1) {
             outFile << ",";
         }
@@ -170,11 +173,14 @@ void Qwirkle::loadGame() {
         int numSize = 0;
         while(!inFile.eof()) {
             //retrieve player data
+            std::getline(inFile, tempBuffer, '\n');
+            numPlayer = std::stoi(tempBuffer.c_str());
+            player = new Player[numPlayer];
             for(int i = 0; i < numPlayer; i++) {
                 std::getline(inFile, tempBuffer, '\n');
                 player[i].setName(tempBuffer);
                 std::getline(inFile, tempBuffer, '\n');
-                player[i].setScore(std::stoi(tempBuffer));
+                player[i].setScore(std::stoi(tempBuffer.c_str()));
                 std::getline(inFile, tempBuffer, '\n');
                 temp = splitToTile(tempBuffer, ",");
                 for(unsigned int j = 0; j < temp.size(); j++) {
@@ -183,7 +189,7 @@ void Qwirkle::loadGame() {
             }
             //retrieve map
             std::getline(inFile, tempBuffer, '\n');
-            numSize = std::stoi(tempBuffer);
+            numSize = std::stoi(tempBuffer.c_str());
             gameMap.clear();
             for(int i = 0; i < numSize; i++) {
                 std::getline(inFile, tempBuffer, '\n');
@@ -197,14 +203,12 @@ void Qwirkle::loadGame() {
                 bag.addNote(temp[i]);
             }
             std::getline(inFile, tempBuffer, '\n');
-            turn = std::stoi(tempBuffer);
+            turn = std::stoi(tempBuffer.c_str());
         }
         //delete \n in buffer
         std::cin.get();
         //start playing
-        while(gamePlay) {
-            play();
-        }
+        play();
     } else {
         std::cout << "There Is No File Called: " << tempBuffer << std::endl;
         std::cout << "The Game Is Shutting Down " << std::endl;
@@ -215,12 +219,12 @@ void Qwirkle::loadGame() {
 //split the string and store in a Tile vector
 std::vector<Tile> Qwirkle::splitToTile(const std::string& str,
                                        const std::string& delimiter) {
-    Tile tile(emptyTile);
     std::vector<Tile> tempVec;
     std::string strs = str + delimiter;
     size_t pos = strs.find(delimiter);
     // move from one delimiter to the next
     while(pos != std::string::npos) {
+        Tile tile(emptyTile);
         std::string tempStr = strs.substr(0, pos);
         if(tempStr.compare("  ") != 0) {
             tile = (tempStr);
@@ -374,21 +378,23 @@ bool Qwirkle::placeAtCommand(std::string tiles, std::string locations) {
         unsigned int y = location[i].substr(0, 1)[0] - 65;
         unsigned int x = strtol(location[i].substr(1).c_str(), NULL, 10);
         //check validation
-        if(colours.find(tile[i].getColour()) == std::string::npos
-                || tile[i].getShape() < 0
-                || tile[i].getShape() > 6) {
+        if(tile.size() != location.size()) {
+            std::cout << "Tile And Location Must Be Equal" << std::endl;
+            i = tile.size();
+            check = false;
+        } else if(colours.find(tile[i].getColour()) == std::string::npos
+                  || tile[i].getShape() < 0
+                  || tile[i].getShape() > 6) {
             std::cout << "Tile Doesnt Exists" << std::endl;
             check = false;
         } else if(x < 0 || x >= gameMap.size() || y < 0 || y >= gameMap.size()) {
             std::cout << location[i] << " Is Out Of Bound, Try Again" << std::endl;
             check = false;
         } else if(!isEmpty(x, y)) {
-            std::cout << location[i]
-                      << " Is Not Empty, Try Again" << std::endl;
+            std::cout << location[i] << " Is Not Empty, Try Again" << std::endl;
             check = false;
         } else if(!player[turn].hasTile(tile[i])) {
-            std::cout << "You Dont Have " << tile[i]
-                      .print() << ", Enter Another Tile" <<
+            std::cout << "You Dont Have " << tile[i].print() << ", Enter Another Tile" <<
                       std::endl;
             check = false;
         } else if(!isValid(tile, location)) {
@@ -454,17 +460,19 @@ void Qwirkle::switchTurn() {
 
 //the board that game mainly run
 void Qwirkle::play() {
-    std::cout << player[turn].getName() << ", it's your turn" << std::endl;
-    for(int i = 0; i < numPlayer; i++) {
-        std::cout << "Score For " << player[i].getName() << ": " << player[i].getScore()
-                  << std::endl;
+    while(gamePlay) {
+        std::cout << player[turn].getName() << ", it's your turn" << std::endl;
+        for(int i = 0; i < numPlayer; i++) {
+            std::cout << "Score For " << player[i].getName() << ": " << player[i].getScore()
+                      << std::endl;
+        }
+        paintMap();
+        std::cout << std::endl << "Your Hand Is: " << player[turn].printTiles() <<
+                  std::endl;
+        std::cout << std::endl;
+        command();
+        gameOver();
     }
-    paintMap();
-    std::cout << std::endl << "Your Hand Is: " << player[turn].printTiles() <<
-              std::endl;
-    std::cout << std::endl;
-    command();
-    gameOver();
 }
 
 //place the tile at the certain location and add the score of that tile as well

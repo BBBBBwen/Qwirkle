@@ -19,6 +19,8 @@ public:
     void setName(std::string name);
     bool hasTile(Tile tile);
     std::string printTiles();
+    std::string printPlainTiles();
+
 private:
     std::string name;
     int         score;

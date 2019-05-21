@@ -7,11 +7,10 @@ LinkedList::LinkedList() :
 }
 
 LinkedList::~LinkedList() {
-    std::cout << "~LinkedList" << std::endl;
-    for(int i = 0;i < maxTiles; i++) {
+    for(int i = 0; i < maxTiles; i++) {
         Node* del = head;
         head = head->next;
-        if(del){
+        if(del) {
             delete del;
             del = nullptr;
         }

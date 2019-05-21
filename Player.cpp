@@ -28,11 +28,23 @@ LinkedList Player::getTiles() {
 int Player::getNumTiles() {
     return numTiles;
 }
+
 //print all tiles on player's hand
 std::string Player::printTiles() {
     std::string str = "";
     for(int i = 0; i < handTiles.getSize(); i++) {
         str += handTiles.get(i).print();
+        if(i != handTiles.getSize() - 1)
+            str += ",";
+    }
+    return str;
+}
+
+//print all tiles on player's hand
+std::string Player::printPlainTiles() {
+    std::string str = "";
+    for(int i = 0; i < handTiles.getSize(); i++) {
+        str += handTiles.get(i).printPlainTile();
         if(i != handTiles.getSize() - 1)
             str += ",";
     }
@@ -69,10 +81,11 @@ void Player::deleteTiles(Tile tile) {
 
 //check if the player has the certain tile
 bool Player::hasTile(Tile tile) {
+    bool check = false;
     for(int i = 0; i < handTiles.getSize(); i++) {
         if(handTiles.get(i) == tile) {
-            return true;
+            check = true;
         }
     }
-    return false;
+    return check;
 }

@@ -14,6 +14,7 @@ public:
     Tile(std::string tileString);
     ~Tile();
     std::string print();
+    std::string printPlainTile() ;
     Shape getShape();
     Colour getColour();
     bool isEqual(Tile tile);
