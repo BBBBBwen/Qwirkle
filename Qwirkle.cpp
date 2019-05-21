@@ -29,7 +29,7 @@ Qwirkle::~Qwirkle() {
 void Qwirkle::initialBag() {
     Shape shape[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
     Colour colour[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < 2; i++) {
         for(int j = 0; j < 6; j++) {
             for(int n = 0; n < 6; n++) {
                 Tile tile(shape[j], colour[n]);
@@ -270,7 +270,10 @@ void Qwirkle::showInfo() {
 void Qwirkle::paintMap() {
     std::cout << "   ";
     for(unsigned int i = 0; i < gameMap[0].size(); i++) {
-        std::cout << i << "  ";
+        if(i < 10)
+            std::cout << i << "  ";
+        else
+            std::cout << i << " ";
     }
     std::cout << std::endl;
     std::cout << "---";
@@ -641,7 +644,7 @@ bool Qwirkle::isColValid(Tile& tile, const unsigned int& x,
     bool checkEqual = true;
     bool checkUp = true, checkDown = true;
     int numCol = 0;
-    for(unsigned int i = 1; i < 6; i++) {
+    for(unsigned int i = 1; i < 7; i++) {
         //check tiles below is valid
         if(y + i < gameMap.size() && checkDown) {
             if(isEmpty(x, y + i)) {
@@ -693,7 +696,7 @@ bool Qwirkle::isRowValid(Tile& tile, const unsigned int& x,
     bool checkEqual = true;
     bool checkLeft = true, checkRight = true;
     int numRow = 0;
-    for(unsigned int i = 1; i < 6; i++) {
+    for(unsigned int i = 1; i < 7; i++) {
         //check tiles on the right is valid
         if(x + i < gameMap.size() && checkRight) {
             if(isEmpty(x + i, y)) {
