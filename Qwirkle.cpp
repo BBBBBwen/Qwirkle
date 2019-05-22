@@ -659,6 +659,7 @@ int Qwirkle::calculateRowScore(Tile& tile, const unsigned int& x,
     }
     return score;
 }
+
 //calculate the score the tile is going to get
 int Qwirkle::calculateColScore(Tile& tile, const unsigned int& x,
                                const unsigned int& y) {
@@ -698,10 +699,9 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
     bool returnCheck = true;
     bool checkShape = false;
     bool checkColour = false;
+    unsigned int emptyAll = 0;
     Shape shape = tile[0].getShape();
     Colour colour = tile[0].getColour();
-    unsigned int j = 0;
-    //
     for(unsigned int i = 0; i < tile.size(); i++) {
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), NULL, 10);
@@ -713,22 +713,22 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         }
         if(isEmpty(x + 1, y) && isEmpty(std::abs(x - 1), y) &&
                 isEmpty(x, y + 1) && isEmpty(x, std::abs(y - 1))) {
-            returnCheck = isFirstTile;
-        } else if(!isColValid(tile[i], x, y) || !isRowValid(tile[i], x, y)) {
-            returnCheck = false;
-        } else {
-            gameMap[y][x] = tile[i];
-            j++;
-            if(j <= tile.size()) {
-                i = 0;
-                returnCheck = true;
+            if(tile.size() > 1) {
+                emptyAll++;
+                gameMap[y][x] = tile[i];
             } else {
-                i = tile.size();
+                returnCheck = isFirstTile;
             }
+        }
+        if(!isColValid(tile[i], x, y) || !isRowValid(tile[i], x, y)) {
+            returnCheck = false;
         }
     }
     //
     if(checkColour && checkShape) {
+        returnCheck = false;
+    }
+    if(emptyAll == tile.size()){
         returnCheck = false;
     }
     for(unsigned int i = 0; i < tile.size(); i++) {
