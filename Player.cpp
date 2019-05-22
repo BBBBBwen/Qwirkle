@@ -71,6 +71,12 @@ void Player::addTiles(Tile tile) {
     }
 }
 
+//superdraw for testing
+void Player::superDraw(Tile tile) {
+    this->handTiles.addNote(tile);
+    numTiles++;
+}
+
 //delete the tile from player's hand
 void Player::deleteTiles(Tile tile) {
     if(hasTile(tile)) {

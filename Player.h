@@ -15,6 +15,7 @@ public:
     LinkedList getTiles();
     void setScore(unsigned int score);
     void addTiles(Tile tile);
+    void superDraw(Tile tile);
     void deleteTiles(Tile tile);
     void setName(std::string name);
     bool hasTile(Tile tile);

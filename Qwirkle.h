@@ -5,6 +5,15 @@
 #include <fstream>
 #include <regex>
 
+#include "LinkedList.h"
+#include "Player.h"
+#include "TileCodes.h"
+#include "ColourHelp.h"
+
+#define  GAME            false
+#define  TEST            true
+#define  EXIT_SUCCESS    0
+
 class Qwirkle {
 public:
     Qwirkle();
@@ -16,18 +25,19 @@ public:
     void loadGame();
     void showInfo();
     void command();
+    void testing();
 
     //secondery functions
     void initialBag();
     void initialMap();
-    void paintMap();
+    void paintMap(bool isTest);
     void placeTile(std::vector<Tile> tile, std::vector<std::string> location);
     void play();
     void extendMap(unsigned int mapSize);
     void helpCommand();
-    bool placeAtCommand(std::string tiles, std::string location);
+    bool placeAtCommand(std::string tiles, std::string location, bool isTest);
     bool replaceCommand(std::string tiles);
-    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location);
+    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location, bool isTest);
     bool isColValid(Tile& tile, const unsigned int& x, const unsigned int& y);
     bool isRowValid(Tile& tile, const unsigned int& x, const unsigned int& y);
     int calculateColScore(Tile& tile, const unsigned int& x, const unsigned int& y);
