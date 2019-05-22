@@ -3,11 +3,10 @@
 // Main Program
 int main(void) {
     Qwirkle* qwirkle = new Qwirkle();
-    
     //Game Launched
     std::cout << "" << std::endl;
-    std::cout << " [ "<<BUC<<"Welcome To Qwirkle!"<<RESET<<" ]" << WColour << std::endl << std::endl << std::endl;
-    
+    std::cout << " [ " << BUC << "Welcome To Qwirkle!" << RESET << " ]" << WColour
+              << std::endl << std::endl << std::endl;
     //Bring up menu
     qwirkle->menu();
     delete qwirkle;
@@ -16,23 +15,19 @@ int main(void) {
 }
 
 // Test
-void Qwirkle::testing(){
+void Qwirkle::testing() {
     numPlayer = 1;
     player = new Player[numPlayer];
-    Tile superDraw= emptyTile;
-    for(int i = 0; i<72; i++){
+    Tile superDraw = emptyTile;
+    for(int i = 0; i < 72; i++) {
         superDraw = bag.draw();
         player[0].superDraw(superDraw);
     }
-
     std::string tile, position;
-
-    while(std::cin >> tile >> position){
+    while(std::cin >> tile >> position) {
         placeAtCommand(tile, position, TEST);
     }
-
     paintMap(TEST);
-
 }
 
 Qwirkle::Qwirkle() :
@@ -78,20 +73,15 @@ void Qwirkle::initialMap() {
 void Qwirkle::menu() {
     std::string str;
     int choose;
-    
-    
-    std::cout <<GColour<< " --------[ " <<BUG<< "Menu" <<RESET<< GColour << " ]--------" << WColour << std::endl << std::endl;
-    
+    std::cout << GColour << " --------[ " << BUG << "Menu" << RESET << GColour <<
+              " ]--------" << WColour << std::endl << std::endl;
     std::cout << " 1. New Game" << std::endl;
     std::cout << " 2. Load Game" << std::endl;
     std::cout << " 3. Show Group Info" << std::endl;
     std::cout << " 4. Quit" << std::endl << std::endl;
-    
     std::cout << GColour << " ------------------------" << WColour << std::endl;
     std::cout << " Select option: " << std::endl;
     std::cout << Cyan <<  " > ";
-    
-    
     std::cin >> str;
     std::cin.get();
     choose = std::atoi(str.c_str());
@@ -104,10 +94,13 @@ void Qwirkle::menu() {
         menu();
     } else if(choose == 4) {
         std::cout << "" << std::endl << std::endl;
-        std::cout << RColour << " [ Exiting Game ]  " << WColour << std::endl <<std::endl;
+        std::cout << RColour << " [ Exiting Game ]  " << WColour << std::endl <<
+                  std::endl;
         gamePlay = false;
     } else {
-        std::cout << RColour <<" Invalid input. Please only select number between 1 - 4." << WColour << std::endl;
+        std::cout << RColour <<
+                  " Invalid input. Please only select number between 1 - 4." << WColour <<
+                  std::endl;
         menu();
     }
     //delete \n in buffer
@@ -118,18 +111,11 @@ void Qwirkle::newGame() {
     bool checkName = true;
     std::string name = "";
     std::string str = "";
-    
-    
     std::cout << "" << std::endl;
-    
     std::cout << Cyan << " [Loading Game]  " << WColour << std::endl << std::endl;
-    
-    
     while(numPlayer > 4 || numPlayer < 2) {
-        
         std::cout << " Enter the amount of players(2 - 4):" << std::endl << std::endl;
         std::cout << Cyan << " > ";
-        
         std::cin >> str;
         numPlayer = std::atoi(str.c_str());
     }
@@ -137,29 +123,24 @@ void Qwirkle::newGame() {
     for(int i = 0; i < numPlayer; i++) {
         checkName = true;
         while(checkName) {
-            
-            std::cout << WColour << " Enter Player " << i + 1 << "'s Name:"<<
+            std::cout << WColour << " Enter Player " << i + 1 << "'s Name:" <<
                       " (Uppercase characters only)" << std::endl;
             std::cout << Cyan << " > ";
-            
             std::cin >> name;
             if(!std::regex_match(name, std::regex("[A-Z]+"))) {
-                
-                std::cout << RColour << " Invalid input. Please try again." << WColour << std::endl;
-                
+                std::cout << RColour << " Invalid input. Please try again." << WColour <<
+                          std::endl;
             } else {
                 player[i].setName(name);
                 checkName = false;
             }
         }
     }
-    
-    
-     std::cout << GColour << " ------------------------" << WColour << std::endl;
-    std::cout << "      [ " << BUC << "Game Start"<< RESET <<" ]"<< WColour << std::endl;
-    std::cout << GColour << " ------------------------" << WColour << std::endl << std::endl ;
-    
-    
+    std::cout << GColour << " ------------------------" << WColour << std::endl;
+    std::cout << "      [ " << BUC << "Game Start" << RESET << " ]" << WColour <<
+              std::endl;
+    std::cout << GColour << " ------------------------" << WColour << std::endl <<
+              std::endl ;
     //initialise players hand tiles
     Tile tile = emptyTile;
     for(int i = 0; i < 6; i++) {
@@ -212,14 +193,9 @@ void Qwirkle::saveGame(std::string fileName) {
 //load game data from the file
 void Qwirkle::loadGame() {
     std::string tempBuffer;
-    
     std::cout << "" << std::endl;
-    
     std::cout << Cyan << " Input save name to load: " << std::endl << std::endl;
-    
     std::cout << Cyan << " > ";
-    
-    
     std::cin >> tempBuffer;
     std::ifstream inFile(tempBuffer + ".sav");
     if(inFile.is_open()) {
@@ -264,12 +240,11 @@ void Qwirkle::loadGame() {
         //start playing
         play();
     } else {
-        
         std::cout << "" << std::endl;
-        std::cout << RColour << " No files are named: " << WColour << tempBuffer << std::endl << std::endl;
-        
-        std::cout << RColour << " Please try again." << WColour << std::endl << std::endl;
-        
+        std::cout << RColour << " No files are named: " << WColour << tempBuffer <<
+                  std::endl << std::endl;
+        std::cout << RColour << " Please try again." << WColour << std::endl <<
+                  std::endl;
         menu();
     }
 }
@@ -313,38 +288,31 @@ std::vector<std::string> Qwirkle::splitToString(const std::string& str,
 //display information of the group
 void Qwirkle::showInfo() {
     std::cout << "" << std::endl << std::endl << std::endl;
-    std::cout << " ----------------------------------------" << std::endl <<std::endl;
-    
-    std::cout << "             [ "<< BUR <<"Group Info"<<RESET<<" "<<Cyan<<"]" << WColour << std::endl << std::endl;
-    
-    std::cout << Cyan << " Name: "<< WColour <<"<Bowen Zhang>" << std::endl;
-    
-    std::cout << Cyan << " Student ID: "<< WColour <<"<s3617571>" << std::endl;
-    
-    std::cout << Cyan << " Email: "<< WColour <<"<s3617571@student.rmit.edu.au>" << std::endl << std::endl;
-    
+    std::cout << " ----------------------------------------" << std::endl <<
+              std::endl;
+    std::cout << "             [ " << BUR << "Group Info" << RESET << " " << Cyan <<
+              "]" << WColour << std::endl << std::endl;
+    std::cout << Cyan << " Name: " << WColour << "<Bowen Zhang>" << std::endl;
+    std::cout << Cyan << " Student ID: " << WColour << "<s3617571>" << std::endl;
+    std::cout << Cyan << " Email: " << WColour << "<s3617571@student.rmit.edu.au>"
+              << std::endl << std::endl;
     /*===================================*/
-    
-    std::cout << Cyan << " Name: "<< WColour <<"<Cheng Chen>" << std::endl;
-    
-    std::cout << Cyan << " Student ID: "<< WColour <<"<s3728207>" << std::endl;
-    
-    std::cout << Cyan << " Email: "<< WColour <<"<s3728207@student.rmit.edu.au>" << std::endl << std::endl;
-    
+    std::cout << Cyan << " Name: " << WColour << "<Cheng Chen>" << std::endl;
+    std::cout << Cyan << " Student ID: " << WColour << "<s3728207>" << std::endl;
+    std::cout << Cyan << " Email: " << WColour << "<s3728207@student.rmit.edu.au>"
+              << std::endl << std::endl;
     /*===================================*/
-    
-    std::cout << Cyan << " Name: "<< WColour <<"<Lucas Strilakos>" << std::endl;
-    std::cout << Cyan << " Student ID: "<< WColour <<"<s3722050>" << std::endl;
-    std::cout << Cyan << " Email: "<< WColour <<"<s3722050@student.rmit.edu.au>" << std::endl << std::endl;
-    
+    std::cout << Cyan << " Name: " << WColour << "<Lucas Strilakos>" << std::endl;
+    std::cout << Cyan << " Student ID: " << WColour << "<s3722050>" << std::endl;
+    std::cout << Cyan << " Email: " << WColour << "<s3722050@student.rmit.edu.au>"
+              << std::endl << std::endl;
     /*===================================*/
-    
-    std::cout << Cyan << " Name: "<< WColour <<"<Ty Ty Chau>" << std::endl;
-    std::cout << Cyan << " Student ID: "<< WColour <<"<s3668469>" << std::endl;
-    std::cout << Cyan << " Email: "<< WColour <<"<s3668469@student.rmit.edu.au>" << std::endl << std::endl;
-    
-    
-    std::cout << " ----------------------------------------" << std::endl << std::endl << std::endl;
+    std::cout << Cyan << " Name: " << WColour << "<Ty Ty Chau>" << std::endl;
+    std::cout << Cyan << " Student ID: " << WColour << "<s3668469>" << std::endl;
+    std::cout << Cyan << " Email: " << WColour << "<s3668469@student.rmit.edu.au>"
+              << std::endl << std::endl;
+    std::cout << " ----------------------------------------" << std::endl <<
+              std::endl << std::endl;
 }
 
 //paint map with the frame
@@ -365,9 +333,9 @@ void Qwirkle::paintMap(bool isTest) {
     for(unsigned int i = 0; i < gameMap.size(); i++) {
         std::cout << (char)('A' + i) << " |";
         for(unsigned int j = 0; j < gameMap[0].size(); j++) {
-            if(isTest){
+            if(isTest) {
                 std::cout << gameMap[i][j].printPlainTile() << "|";
-            }else{
+            } else {
                 std::cout << gameMap[i][j].print() << "|";
             }
         }
@@ -380,16 +348,14 @@ void Qwirkle::command() {
     bool check = false;
     while(!check) {
         std::cout << Cyan << " > ";
-        
         std::string command;
         std::vector<std::string> tempStr;
         std::getline(std::cin, command);
         toUpperCase(command);
         tempStr = splitToString(command, " ");
         if(command.compare("SAVE") == 0) {
-           std::cout << std::endl;
+            std::cout << std::endl;
             std::cout << " Save file as: " << std::endl << std::endl;
-            
             std::cout << Cyan << " > ";
             std::cin >> command;
             saveGame(command);
@@ -420,17 +386,15 @@ bool Qwirkle::replaceCommand(std::string tileOnHold) {
     if(colours.find(tile[0].getColour()) == std::string::npos
             || tile[0].getShape() < 0 || tile[0].getShape() > 6
             || tileOnHold.length() > 2) {
-        
         std::cout << RColour << " Invalid tile." << WColour << std::endl;
-        
     } else if(tileOnHold.find(",") != std::string::npos) {
-        
         std::cout << std::endl;
-        std::cout << RColour << " You can't replace multiple tiles." << WColour << std::endl;
-        
+        std::cout << RColour << " You can't replace multiple tiles." << WColour <<
+                  std::endl;
     } else if(!player[turn].hasTile(tile[0])) {
         std::cout << std::endl;
-         std::cout << RColour << " Invalid tiles. Please try again." << WColour << std::endl << std::endl;
+        std::cout << RColour << " Invalid tiles. Please try again." << WColour <<
+                  std::endl << std::endl;
     } else {
         Tile replaceTile = bag.replaceTile(tile[0]);
         player[turn].deleteTiles(tile[0]);
@@ -444,41 +408,39 @@ bool Qwirkle::replaceCommand(std::string tileOnHold) {
 //processing help command
 void Qwirkle::helpCommand() {
     std::cout << std::endl;
-    
-    std::cout <<GColour<< " ----------------[ " <<BUG<< "Help Menu" <<RESET<< GColour << " ]----------------" << WColour << std::endl;
-    
+    std::cout << GColour << " ----------------[ " << BUG << "Help Menu" << RESET <<
+              GColour << " ]----------------" << WColour << std::endl;
     std::cout << std::endl;
     std::cout << GColour << " [ Save ]" << std::endl;
-    std::cout << WColour << " Save current game." << std::endl << std::endl << std::endl;
-    
-    
-    
+    std::cout << WColour << " Save current game." << std::endl << std::endl <<
+              std::endl;
     std::cout << GColour << " [ Place ]" << std::endl;
-    std::cout << WColour << " Place the chosen tiles at a chosen location on the game board." << std::endl;
-    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour << ": Place R2(Tile) at B3(Location)." << std::endl << std::endl;
-    
-    std::cout << " To place multiple tiles at multiple locates, separate it with a comma." << std::endl;
-    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour << ": Place R2,Y2 at B3, B4." << std::endl << std::endl << std::endl;
-    
-    
-    
+    std::cout << WColour <<
+              " Place the chosen tiles at a chosen location on the game board." << std::endl;
+    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour <<
+              ": Place R2(Tile) at B3(Location)." << std::endl << std::endl;
+    std::cout <<
+              " To place multiple tiles at multiple locates, separate it with a comma." <<
+              std::endl;
+    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour <<
+              ": Place R2,Y2 at B3, B4." << std::endl << std::endl << std::endl;
     std::cout << GColour << " [ Replace ]" << std::endl;
-    std::cout << WColour <<" Replace a tile that's in your hand. (Doing this will count as a turn.)" << std::endl;
-    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour << ": Replace Y4(Tile on hand)." << std::endl << std::endl << std::endl;
-    
-    
+    std::cout << WColour <<
+              " Replace a tile that's in your hand. (Doing this will count as a turn.)" <<
+              std::endl;
+    std::cout << "     - " << BUM << "Example" << RESET << "" << WColour <<
+              ": Replace Y4(Tile on hand)." << std::endl << std::endl << std::endl;
     std::cout << GColour << " [ Quit/Exit ]" << std::endl;
-    std::cout << WColour <<" End the game." << std::endl << std::endl << std::endl;
-    
-    
-    std::cout << GColour << " [ Help ]" <<std::endl;
-    std::cout << WColour <<" Display the available commands." << std::endl << std::endl << std::endl;
-        
+    std::cout << WColour << " End the game." << std::endl << std::endl << std::endl;
+    std::cout << GColour << " [ Help ]" << std::endl;
+    std::cout << WColour << " Display the available commands." << std::endl <<
+              std::endl << std::endl;
     std::cout << GColour << " ------------------------" << WColour << std::endl;
 }
 
 //processing place at command
-bool Qwirkle::placeAtCommand(std::string tiles, std::string locations, bool isTest) {
+bool Qwirkle::placeAtCommand(std::string tiles, std::string locations,
+                             bool isTest) {
     bool check = true;
     int checkExtend = 1;
     //take following three string check if it is right
@@ -491,40 +453,31 @@ bool Qwirkle::placeAtCommand(std::string tiles, std::string locations, bool isTe
         unsigned int x = strtol(location[i].substr(1).c_str(), NULL, 10);
         //check validation
         if(tile.size() != location.size()) {
-            
             std::cout << "" << std::endl;
-            std::cout << RColour <<  " Tile and location must be equal." << WColour << std::endl << std::endl;
-            
+            std::cout << RColour <<  " Tile and location must be equal." << WColour <<
+                      std::endl << std::endl;
             i = tile.size();
             check = false;
         } else if(colours.find(tile[i].getColour()) == std::string::npos
                   || tile[i].getShape() < 0
                   || tile[i].getShape() > 6) {
-            std::cout << RColour << " Tile does not exists." << WColour << std::endl << std::endl;
-            
+            std::cout << RColour << " Tile does not exists." << WColour << std::endl <<
+                      std::endl;
             check = false;
         } else if(x < 0 || x >= gameMap.size() || y < 0 || y >= gameMap.size()) {
-            
             std::cout << "" << std::endl;
-            
-            std::cout << RColour << " " << location[i] << " is out of bound. Try again." << WColour << std::endl << std::endl;
-            
+            std::cout << RColour << " " << location[i] << " is out of bound. Try again." <<
+                      WColour << std::endl << std::endl;
         } else if(!isEmpty(x, y)) {
-            
             std::cout << "" << std::endl;
-            
             std::cout << RColour << " " << location[i]
                       << " is not an empty location. Try Again." << WColour << std::endl << std::endl;
-
             check = false;
         } else if(!player[turn].hasTile(tile[i])) {
-          
             std::cout << "" << std::endl;
-            
             std::cout << RColour << " You do not have " << tile[i]
-                      .print() << RColour <<", please select another tile." << WColour <<
+                      .print() << RColour << ", please select another tile." << WColour <<
                       std::endl << std::endl;
-
             check = false;
         } else if(!isValid(tile, location, isTest)) {
             check = false;
@@ -589,12 +542,12 @@ void Qwirkle::switchTurn() {
 
 //the board that game mainly run
 void Qwirkle::play() {
-    
     while(gamePlay) {
         std::cout << std::endl;
-        std::cout << GColour << "-------------------------------------------------------------" << std::endl;
-        std::cout << Cyan << " [ It is "<<player[turn].getName() << "'s turn ]" << WColour << std::endl <<std::endl;
-        
+        std::cout << GColour <<
+                  "-------------------------------------------------------------" << std::endl;
+        std::cout << Cyan << " [ It is " << player[turn].getName() << "'s turn ]" <<
+                  WColour << std::endl << std::endl;
         for(int i = 0; i < numPlayer; i++) {
             std::cout << " [" << player[i].getName() << "'s score: " << player[i].getScore()
                       << "]" << std::endl;
@@ -603,8 +556,7 @@ void Qwirkle::play() {
         paintMap(GAME);
         std::cout << std::endl << " Tiles on hands: " << player[turn].printTiles() <<
                   std::endl;
-
-        std::cout <<" "<< std::endl;
+        std::cout << " " << std::endl;
         command();
         gameOver();
     }
@@ -613,6 +565,25 @@ void Qwirkle::play() {
 //place the tile at the certain location and add the score of that tile as well
 void Qwirkle::placeTile(std::vector<Tile> tile,
                         std::vector<std::string> location) {
+    //place tile and store useful data for getting score
+    for(unsigned int i = 0; i < tile.size(); i++) {
+        unsigned int y = location[i].substr(0, 1)[0] - 65;
+        unsigned int x = strtol(location[i].substr(1).c_str(), NULL, 10);
+        gameMap[y][x] = tile[i];
+        player[turn].deleteTiles(tile[i]);
+    }
+    int score = calculateScore(tile, location);
+    player[turn].setScore(score);
+    if(bag.getSize() != 0) {
+        for(unsigned int i = 0; i < tile.size(); i ++) {
+            player[turn].addTiles(bag.draw());
+        }
+    }
+}
+
+//calculate the score the tile is going to get
+int Qwirkle::calculateScore(std::vector<Tile> tile,
+                            std::vector<std::string> location) {
     std::vector<int> colScore;
     std::vector<int> rowScore;
     std::vector<int> xVec;
@@ -625,8 +596,6 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
     for(unsigned int i = 0; i < tile.size(); i++) {
         unsigned int y = location[i].substr(0, 1)[0] - 65;
         unsigned int x = strtol(location[i].substr(1).c_str(), NULL, 10);
-        gameMap[y][x] = tile[i];
-        player[turn].deleteTiles(tile[i]);
         xVec.push_back(x);
         yVec.push_back(y);
         rowScore.push_back(calculateRowScore(tile[i], x, y));
@@ -655,12 +624,7 @@ void Qwirkle::placeTile(std::vector<Tile> tile,
     for(unsigned int i = 0; i < tile.size(); i++) {
         score += colScore[i] + rowScore[i];
     }
-    player[turn].setScore(score);
-    if(bag.getSize() != 0) {
-        for(unsigned int i = 0; i < tile.size(); i ++) {
-            player[turn].addTiles(bag.draw());
-        }
-    }
+    return score;
 }
 
 //calculate the score the tile is going to get
@@ -732,8 +696,8 @@ int Qwirkle::calculateColScore(Tile& tile, const unsigned int& x,
 bool Qwirkle::isValid(std::vector<Tile>& tile,
                       std::vector<std::string> location, bool isTest) {
     bool returnCheck = true;
-    bool checkShape = true;
-    bool checkColour = true;
+    bool checkShape = false;
+    bool checkColour = false;
     Shape shape = tile[0].getShape();
     Colour colour = tile[0].getColour();
     unsigned int j = 0;
@@ -742,10 +706,10 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), NULL, 10);
         if(tile[i].getShape() != shape) {
-            checkShape = false;
+            checkShape = true;
         }
         if(tile[i].getColour() != colour) {
-            checkColour = false;
+            checkColour = true;
         }
         if(isEmpty(x + 1, y) && isEmpty(std::abs(x - 1), y) &&
                 isEmpty(x, y + 1) && isEmpty(x, std::abs(y - 1))) {
@@ -764,19 +728,21 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
         }
     }
     //
-    if(!checkColour && !checkShape) {
+    if(checkColour && checkShape) {
         returnCheck = false;
     }
     for(unsigned int i = 0; i < tile.size(); i++) {
         if(!returnCheck) {
-            if(isTest){
+            if(isTest) {
                 std::cout << "" << std::endl;
-                std::cout << RColour <<"You can't place " << tile[i].print() << RColour << " at " << location[i] << WColour <<
-                      std::endl << std::endl;
-            }else{
+                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
+                          " at " << location[i] << WColour <<
+                          std::endl << std::endl;
+            } else {
                 std::cout << "" << std::endl;
-                std::cout << RColour <<"You can't place " << tile[i].print() << RColour << " at " << location[i] << WColour <<
-                      std::endl << std::endl;
+                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
+                          " at " << location[i] << WColour <<
+                          std::endl << std::endl;
             }
         }
         int y = location[i].substr(0, 1)[0] - 65;
@@ -920,19 +886,21 @@ void Qwirkle::gameOver() {
                 winner = player[i].getName();
             }
         }
-    
-        std::cout << GColour << "-------------------------------------------------------------" << std::endl <<std::endl;
+        std::cout << GColour <<
+                  "-------------------------------------------------------------" << std::endl <<
+                  std::endl;
         std::cout << WColour;
-        std::cout  << " ["<<BUY<<"Scoreboard"<<RESET<<WColour<<"]" << std::endl;
-        
+        std::cout  << " [" << BUY << "Scoreboard" << RESET << WColour << "]" <<
+                   std::endl;
         std::cout << "" << std::endl;
         for(int i = 0; i < numPlayer; i++) {
-           std::cout << " " << "Score For " << player[i].getName() << ": " << player[i].getScore() << std::endl;
+            std::cout << " " << "Score For " << player[i].getName() << ": " <<
+                      player[i].getScore() << std::endl;
         }
-        
         std::cout << std::endl;
-        std::cout << " "<<BUM<<"WINNER"<<RESET<<": " << winner <<std::endl <<std::endl;
-        
-        std::cout <<GColour<< " --------[ " <<BUC<< "Thanks for playing" <<RESET<< GColour << " ]--------" << WColour << std::endl << std::endl;
+        std::cout << " " << BUM << "WINNER" << RESET << ": " << winner << std::endl <<
+                  std::endl;
+        std::cout << GColour << " --------[ " << BUC << "Thanks for playing" << RESET <<
+                  GColour << " ]--------" << WColour << std::endl << std::endl;
     }
 }

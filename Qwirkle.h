@@ -18,7 +18,7 @@ class Qwirkle {
 public:
     Qwirkle();
     ~Qwirkle();
-    //main fuctions
+    //main functions
     void menu();
     void newGame();
     void saveGame(const std::string fileNmae);
@@ -27,22 +27,24 @@ public:
     void command();
     void testing();
 
-    //secondery functions
+    //secondary functions
     void initialBag();
     void initialMap();
+    void play();
     void paintMap(bool isTest);
     void placeTile(std::vector<Tile> tile, std::vector<std::string> location);
-    void play();
     void extendMap(unsigned int mapSize);
     void helpCommand();
     bool placeAtCommand(std::string tiles, std::string location, bool isTest);
     bool replaceCommand(std::string tiles);
-    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location, bool isTest);
+    bool isValid(std::vector<Tile>& tile, std::vector<std::string> location,
+                 bool isTest);
     bool isColValid(Tile& tile, const unsigned int& x, const unsigned int& y);
     bool isRowValid(Tile& tile, const unsigned int& x, const unsigned int& y);
+    int calculateScore(std::vector<Tile> tile, std::vector<std::string> location);
     int calculateColScore(Tile& tile, const unsigned int& x, const unsigned int& y);
     int calculateRowScore(Tile& tile, const unsigned int& x, const unsigned int& y);
-    //helper fuctions
+    //helper functions
     void gameOver();
     void switchTurn();
     bool isEmpty(const unsigned int& x, const unsigned int& y);
