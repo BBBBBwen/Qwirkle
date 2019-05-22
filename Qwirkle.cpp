@@ -481,6 +481,17 @@ bool Qwirkle::placeAtCommand(std::string tiles, std::string locations,
             check = false;
         } else if(!isValid(tile, location, isTest)) {
             check = false;
+            if(isTest) {
+                std::cout << std::endl;
+                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
+                          " at " << location[i] << WColour <<
+                          std::endl;
+            } else {
+                std::cout << std::endl;
+                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
+                          " at " << location[i] << WColour <<
+                          std::endl;
+            }
         }
         //if location is beyond the limit, extend it
         if(y == gameMap.size() - 1 || x == gameMap.size() - 1) {
@@ -728,23 +739,10 @@ bool Qwirkle::isValid(std::vector<Tile>& tile,
     if(checkColour && checkShape) {
         returnCheck = false;
     }
-    if(emptyAll == tile.size()){
+    if(emptyAll == tile.size()) {
         returnCheck = false;
     }
     for(unsigned int i = 0; i < tile.size(); i++) {
-        if(!returnCheck) {
-            if(isTest) {
-                std::cout << "" << std::endl;
-                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
-                          " at " << location[i] << WColour <<
-                          std::endl << std::endl;
-            } else {
-                std::cout << "" << std::endl;
-                std::cout << RColour << "You can't place " << tile[i].print() << RColour <<
-                          " at " << location[i] << WColour <<
-                          std::endl << std::endl;
-            }
-        }
         int y = location[i].substr(0, 1)[0] - 65;
         int x = strtol(location[i].substr(1).c_str(), NULL, 10);
         gameMap[y][x] = emptyTile;
